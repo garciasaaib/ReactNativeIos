@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export const styles = StyleSheet.create({
   screen: {
@@ -27,12 +28,14 @@ export const styles = StyleSheet.create({
     height: 100,
   },
   input: {
-    height: 40,
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 1,
+    // height: 40,
+    // borderBottomColor: '#aaa',
+    // borderBottomWidth: 1,
     width: '100%',
-    color: 'white',
-    padding: 10,
+    color: 'black',
+    // backgroundColor: 'grey',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     marginBottom: 20,
   },
 });
