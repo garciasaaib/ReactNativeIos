@@ -1,0 +1,43 @@
+{
+  "navigation": {
+    "addListener": [Function addListener
+    ],
+    "canGoBack": [Function canGoBack
+    ],
+    "closeDrawer": [Function anonymous
+    ],
+    "dispatch": [Function dispatch
+    ],
+    "getId": [Function getId
+    ],
+    "getParent": [Function getParent
+    ],
+    "getState": [Function anonymous
+    ],
+    "goBack": [Function anonymous
+    ],
+    "isFocused": [Function isFocused
+    ],
+    "jumpTo": [Function anonymous
+    ],
+    "navigate": [Function anonymous
+    ],
+    "openDrawer": [Function anonymous
+    ],
+    "removeListener": [Function removeListener
+    ],
+    "reset": [Function anonymous
+    ],
+    "setOptions": [Function setOptions
+    ],
+    "setParams": [Function anonymous
+    ],
+    "toggleDrawer": [Function anonymous
+    ]
+  },
+  "route": {
+    "key": "User-aUTLqIB14fgTyHtUm9lNa",
+    "name": "User",
+    "params": undefined
+  }
+}
