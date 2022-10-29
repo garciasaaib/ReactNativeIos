@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {LoginScreen} from '../screens/LoginScreen';
@@ -16,8 +15,8 @@ export const LoginStackNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Tabs" component={MainMaterialTabTopNavigator} />
+      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
 };

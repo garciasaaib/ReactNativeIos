@@ -7,8 +7,8 @@
  *
  * @format
  */
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import RNBootSplash from 'react-native-bootsplash';
 import {LoginStackNavigator} from './src/navigatiors/LoginStackNavigator';
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StatusBar} from 'native-base';
+// import {StatusBar} from 'native-base';
 import React from 'react';
-import {View, Image, Platform} from 'react-native';
+import {View, Image} from 'react-native';
 import {LoginForm} from '../components/LoginForm';
 import {styles} from '../themes/generalStyles';
 
@@ -14,7 +14,6 @@ export const LoginScreen = () => {
         // justifyContent: 'center',
         // alignItems: 'center',
       }}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
       <View style={styles.screen}>
         <View style={styles.screenChldCenter}>
           <Image
