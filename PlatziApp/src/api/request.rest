@@ -1,0 +1,5 @@
+### Pokedex data
+GET https://pokeapi.co/api/v2/pokemon?limit=20&offset=0
+
+### pokemon detail
+GET https://pokeapi.co/api/v2/pokemon/16/
