@@ -2,7 +2,15 @@ import {Button, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 
-export default function UserData({auth}) {
+interface Props {
+  auth: {
+    username: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+  };
+}
+export default function UserData({auth}: Props) {
   const {logout} = useAuth();
   return (
     <View style={styles.content}>

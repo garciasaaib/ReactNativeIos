@@ -12,7 +12,7 @@ export default function AccountScreen(_props: Props) {
 
   return (
     <SafeAreaView>
-      {auth.isLogged ? <UserData auth={auth} /> : <LoginForm />}
+      {auth?.isLogged ? <UserData auth={auth} /> : <LoginForm />}
     </SafeAreaView>
   );
 }

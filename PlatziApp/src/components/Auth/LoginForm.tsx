@@ -1,4 +1,12 @@
-import {Alert, Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import React from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
@@ -19,11 +27,9 @@ export default function LoginForm() {
       }
 
       Alert.alert('Logging in. Wait a minute.');
-      login(userDetails);
+      login(userDetails, values.keep);
     },
   });
-
-  console.log();
 
   return (
     <View>
@@ -43,6 +49,18 @@ export default function LoginForm() {
         value={formik.values.password}
         onChangeText={text => formik.setFieldValue('password', text)}
       />
+      <View style={styles.keep}>
+        <Switch
+          trackColor={{false: '#333', true: '#81b0ff'}}
+          thumbColor={formik.values.keep ? '#fff' : '#fff'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={value => {
+            formik.setFieldValue('keep', value);
+          }}
+          value={formik.values.keep}
+        />
+        <Text style={styles.keepText}>Keep me logged</Text>
+      </View>
       <Button title="Login" onPress={() => formik.handleSubmit()} />
 
       <Text style={styles.error}>{formik.errors.username}</Text>
@@ -55,6 +73,7 @@ function initialValues() {
   return {
     username: '',
     password: '',
+    keep: false,
   };
 }
 
@@ -62,6 +81,7 @@ function validationSchema() {
   return {
     username: Yup.string().required('username required'),
     password: Yup.string().required('password required'),
+    keep: Yup.boolean(),
   };
 }
 const styles = StyleSheet.create({
@@ -83,5 +103,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'tomato',
     marginTop: 20,
+  },
+  keep: {
+    margin: 12,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  keepText: {
+    paddingLeft: 10,
+    fontSize: 15,
   },
 });

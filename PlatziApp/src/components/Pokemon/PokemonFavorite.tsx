@@ -2,7 +2,6 @@ import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import useFavorites from '../../hooks/useFavorites';
 
-
 const PokemonFavorite = ({id}: {id: number}) => {
   const {addFavorite} = useFavorites();
   return (

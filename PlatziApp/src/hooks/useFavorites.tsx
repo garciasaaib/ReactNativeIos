@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
-export default function useFavorites() {
-  const [idList, setIdList] = useState([]);
+export default () => {
+  const [idList, setIdList] = useState<number[]>([]);
   // const {getItem, setItem} = useAsyncStorage('@favorites');
 
   // const readItemFromStorage = async () => {
@@ -13,18 +13,16 @@ export default function useFavorites() {
   //   await setItem(newValue);
   //   // setValue(newValue);
   // };
-  // const getFromStorage = async () => {
-  //   const res = await getItem();
-  //   console.log(res);
-  // };
   // useEffect(() => {
   //   readItemFromStorage();
   // });
 
-  const addFavorite = (id: string) => {
-    console.log(id);
+  const addFavorite = (id: number) => {
+    console.log(idList);
+    setIdList([...idList, id]);
   };
   return {
     addFavorite,
+    idList,
   };
-}
+};
