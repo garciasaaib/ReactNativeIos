@@ -1,11 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 // import {StatusBar} from 'native-base';
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect} from 'react';
 import {View, Image} from 'react-native';
 import {LoginForm} from '../components/LoginForm';
+import {useAppSelector} from '../context/hooks';
+import {LoginStackNavigatorParams} from '../navigatiors/LoginStackNavigator';
 import {styles} from '../themes/generalStyles';
 
 export const LoginScreen = () => {
+  const {isLoggedIn} = useAppSelector(state => state.auth);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<LoginStackNavigatorParams>>();
+
+  useEffect(() => {
+    isLoggedIn && navigation.navigate('Tabs');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
+
   return (
     <View
       style={{

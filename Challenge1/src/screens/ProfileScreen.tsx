@@ -5,16 +5,14 @@ import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {LoginStackNavigatorParams} from '../navigatiors/LoginStackNavigator';
 import {styles} from '../themes/generalStyles';
-
+import {logout} from '../context/auth/authSlice';
+import {useAppDispatch} from '../context/hooks';
 export const ProfileScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<LoginStackNavigatorParams>>();
+  const dispatch = useAppDispatch();
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Profile Screen</Text>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => navigation.popToTop()}>
+      <TouchableOpacity style={styles.btn} onPress={() => dispatch(logout())}>
         <Text style={styles.btnText}>LogOut</Text>
       </TouchableOpacity>
     </View>

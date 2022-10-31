@@ -15,8 +15,8 @@ export const LoginStackNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Tabs" component={MainMaterialTabTopNavigator} />
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Tabs" component={MainMaterialTabTopNavigator} />
     </Stack.Navigator>
   );
 };

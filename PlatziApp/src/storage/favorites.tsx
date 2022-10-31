@@ -5,7 +5,7 @@ export const getFavoritesStorage = async () => {
     const value = await AsyncStorage.getItem('@favorites');
     if (value !== null) {
       // value previously stored
-      console.log(JSON.parse(value || []));
+      console.log(JSON.parse(value));
     }
   } catch (e) {
     // error reading value

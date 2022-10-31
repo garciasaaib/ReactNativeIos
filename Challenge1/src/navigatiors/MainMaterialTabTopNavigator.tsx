@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
 } from '@react-navigation/material-top-tabs';
-import {RouteProp} from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import {MainScreen} from '../screens/MainScreen';
 import {MyPhotosScreen} from '../screens/MyPhotosScreen';
 import {ProfileScreen} from '../screens/ProfileScreen';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useAppSelector } from '../context/hooks';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { LoginStackNavigatorParams } from './LoginStackNavigator';
 
 type Props = {
   route: RouteProp<MainMaterialTabTopNavigatorParams>;
@@ -22,6 +25,14 @@ export type MainMaterialTabTopNavigatorParams = {
 const Tab = createMaterialTopTabNavigator<MainMaterialTabTopNavigatorParams>();
 
 export const MainMaterialTabTopNavigator = () => {
+  const {isLoggedIn} = useAppSelector(state => state.auth);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<LoginStackNavigatorParams>>();
+
+  useEffect(() => {
+    !isLoggedIn && navigation.navigate('Login');
+  }, [isLoggedIn]);
+
   const inset = useSafeAreaInsets();
   return (
     <Tab.Navigator

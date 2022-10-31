@@ -11,12 +11,16 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import RNBootSplash from 'react-native-bootsplash';
 import {LoginStackNavigator} from './src/navigatiors/LoginStackNavigator';
+import {Provider} from 'react-redux';
+import {store} from './src/context/store';
 
 const App = () => {
   return (
-    <NavigationContainer onReady={() => RNBootSplash.hide()}>
-      <LoginStackNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer onReady={() => RNBootSplash.hide()}>
+        <LoginStackNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
