@@ -7,6 +7,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {PokedexStackParamList} from '../../navigations/PokedexStackNavigator';
+import PokemonFavorite from './PokemonFavorite';
+import useAuth from '../../hooks/useAuth';
 
 const isIos = Platform.OS === 'ios';
 interface Props {
@@ -15,8 +17,10 @@ interface Props {
   image: string;
   type: Species[];
   colors: string[];
+  id: number;
 }
-export default function PokemonHeader({colors, image, name, order}: Props) {
+export default function PokemonHeader({id, colors, image, name, order}: Props) {
+  const {auth} = useAuth();
   const insets = useSafeAreaInsets();
   const colorStyle = {
     backgroundColor: colors[0],
@@ -35,12 +39,7 @@ export default function PokemonHeader({colors, image, name, order}: Props) {
           size={20}
           onPress={() => navigation.popToTop()}
         />
-        <FontAwesome5
-          name="heart"
-          color="white"
-          size={20}
-          onPress={() => console.log('add to favorites')}
-        />
+        <>{auth.isLogged && <PokemonFavorite id={id} />}</>
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.textName}>{capitalize(name)}</Text>

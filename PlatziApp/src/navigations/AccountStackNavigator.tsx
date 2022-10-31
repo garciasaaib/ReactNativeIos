@@ -20,7 +20,7 @@ export default function AccountStackNavigator() {
       }}>
       <Stack.Screen
         name="AccountScreen"
-        options={(): NativeStackNavigationOptions => ({title: 'Pokedex'})}
+        options={(): NativeStackNavigationOptions => ({title: 'Account'})}
         component={AccountScreen}
       />
     </Stack.Navigator>

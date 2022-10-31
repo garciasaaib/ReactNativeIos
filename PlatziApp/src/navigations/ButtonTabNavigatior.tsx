@@ -20,6 +20,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export default function MyTabs() {
   return (
     <Tab.Navigator
+      initialRouteName="AccountScreen"
       sceneContainerStyle={{}}
       screenOptions={(): BottomTabNavigationOptions => ({
         tabBarActiveTintColor: 'tomato',

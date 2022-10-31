@@ -34,6 +34,7 @@ export default function PokemonScreen({route}: Props) {
             overflow: 'hidden',
           }}>
           <PokemonHeader
+            id={pokemon.id}
             name={pokemon.name}
             order={pokemon.order}
             image={pokemon.image!}
