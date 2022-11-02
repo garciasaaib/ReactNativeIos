@@ -8,22 +8,19 @@ export interface Response {
   message: string;
 }
 
-export const userLogin = async ({username, password}: Props) => {
-  try {
-    const userDB = {
-      username: 'ash123',
-      password: '123',
-    };
-    if (userDB.username === username && userDB.password === password) {
-      return {
-        data: userDetails,
-        error: false,
-        message: '',
-      } as Response;
-    }
-  } catch (error) {
-    return {data: null, error: true, message: 'Bad credentials'} as Response;
+export const userLogin = ({username, password}: Props) => {
+  const userDB = {
+    username: 'ash123',
+    password: '123',
+  };
+  if (userDB.username === username && userDB.password === password) {
+    return {
+      data: userDetails,
+      error: false,
+      message: '',
+    } as Response;
   }
+  return {data: null, error: true, message: 'Bad credentials'} as Response;
 };
 
 interface UserData {

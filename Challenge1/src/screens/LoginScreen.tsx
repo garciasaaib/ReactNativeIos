@@ -11,6 +11,7 @@ import {styles} from '../themes/generalStyles';
 
 export const LoginScreen = () => {
   const {isLoggedIn} = useAppSelector(state => state.auth);
+
   const navigation =
     useNavigation<NativeStackNavigationProp<LoginStackNavigatorParams>>();
 
@@ -24,8 +25,6 @@ export const LoginScreen = () => {
       style={{
         flex: 1,
         backgroundColor: 'rgba(77, 74, 157, 0.0)',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}>
       <View style={styles.screen}>
         <View style={styles.screenChldCenter}>

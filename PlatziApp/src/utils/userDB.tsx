@@ -9,3 +9,4 @@ export const userDetails = {
   lastname: 'Ketchup',
   email: 'ashketchup@pokeapi.com',
 };
+export const userStorage = '@user';

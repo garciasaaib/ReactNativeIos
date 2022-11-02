@@ -18,7 +18,7 @@ interface AuthContextProps {
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: {children: JSX.Element}) => {
-  const {getItem, setItem, removeItem} = useAsyncStorage('@authSession');
+  const {getItem, setItem} = useAsyncStorage('@authSession');
   const [auth, setAuth] = useState<AuthState>({
     isLogged: false,
   });
@@ -28,7 +28,6 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
     } catch (error) {
       throw error;
     }
-    
   };
   const readItemFromStorage = async () => {
     try {

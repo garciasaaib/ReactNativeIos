@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useEffect} from 'react';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
 } from '@react-navigation/material-top-tabs';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 import {MainScreen} from '../screens/MainScreen';
 import {MyPhotosScreen} from '../screens/MyPhotosScreen';
 import {ProfileScreen} from '../screens/ProfileScreen';
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import { useAppSelector } from '../context/hooks';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { LoginStackNavigatorParams } from './LoginStackNavigator';
+import {useAppSelector} from '../context/hooks';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {LoginStackNavigatorParams} from './LoginStackNavigator';
+import {Text, View} from 'react-native';
 
-type Props = {
-  route: RouteProp<MainMaterialTabTopNavigatorParams>;
-  navigation: any;
-};
+interface Props
+  extends NativeStackScreenProps<LoginStackNavigatorParams, 'Tabs'> {}
+
 export type MainMaterialTabTopNavigatorParams = {
   Main: undefined;
   MyPhotos: undefined;
@@ -24,19 +25,27 @@ export type MainMaterialTabTopNavigatorParams = {
 };
 const Tab = createMaterialTopTabNavigator<MainMaterialTabTopNavigatorParams>();
 
-export const MainMaterialTabTopNavigator = () => {
+export const MainMaterialTabTopNavigator = ({navigation}: Props) => {
   const {isLoggedIn} = useAppSelector(state => state.auth);
-  const navigation =
-    useNavigation<NativeStackNavigationProp<LoginStackNavigatorParams>>();
 
   useEffect(() => {
-    !isLoggedIn && navigation.navigate('Login');
+    if (!isLoggedIn) {
+      navigation.navigate('Login');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   const inset = useSafeAreaInsets();
+  type ScreenOptionProps = {
+    route: RouteProp<MainMaterialTabTopNavigatorParams>;
+    navigation: any;
+  };
   return (
     <Tab.Navigator
-      screenOptions={(props: Props): MaterialTopTabNavigationOptions => ({
+      initialRouteName="MyPhotos"
+      screenOptions={(
+        props: ScreenOptionProps,
+      ): MaterialTopTabNavigationOptions => ({
         tabBarIconStyle: {marginTop: inset.top},
         tabBarLabelStyle: {fontSize: 12},
         tabBarIcon({color}) {
@@ -50,7 +59,35 @@ export const MainMaterialTabTopNavigator = () => {
           }
         },
       })}>
-      <Tab.Screen name="Main" component={MainScreen} />
+      <Tab.Screen
+        name="Main"
+        options={(): MaterialTopTabNavigationOptions => ({
+          tabBarBadge: () => (
+            <View
+              style={{
+                top: 50,
+                right: 30,
+                backgroundColor: 'red',
+                height: 20,
+                width: 20,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  // backgroundColor: 'red',
+                  borderRadius: 20,
+                  color: 'white',
+                }}>
+                3
+              </Text>
+            </View>
+          ),
+          // title: 'Main',
+        })}
+        component={MainScreen}
+      />
       <Tab.Screen name="MyPhotos" component={MyPhotosScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

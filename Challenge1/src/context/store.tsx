@@ -1,10 +1,12 @@
 import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
 import authReducer from './auth/authSlice';
-import messageReducer from './account/messageSlice';
+import messageReducer from './messages/messageSlice';
+import imageReducer from './image/imageSlice';
 // reducer wrapper, contains all the reducers...
 const reducer = {
   auth: authReducer,
   message: messageReducer,
+  image: imageReducer,
 };
 
 export const store = configureStore({

@@ -7,17 +7,19 @@ import {
   TextInput,
   Platform,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import {styles} from '../themes/generalStyles';
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import {login} from '../context/auth/authSlice';
+import {clearMessage} from '../context/messages/messageSlice';
 import {useAppDispatch, useAppSelector} from '../context/hooks';
 
 export const LoginForm = () => {
   const {isLoggedIn} = useAppSelector(state => state.auth);
-  const {message} = useAppSelector(state => state.message);
+  const message = useAppSelector(state => state.message);
 
   const dispatch = useAppDispatch();
   const formik = useFormik({
@@ -31,7 +33,19 @@ export const LoginForm = () => {
   });
 
   useEffect(() => {
-    console.log(message);
+    const {message: text} = message;
+    if (text) {
+      return Alert.alert('Login try', text, [
+        {
+          text: 'OK',
+          onPress: () => {
+            dispatch(clearMessage());
+          },
+          style: 'cancel',
+        },
+      ]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message]);
   return (
     <View style={{width: '100%', marginBottom: 10, marginTop: 60}}>
@@ -90,13 +104,6 @@ export const LoginForm = () => {
         style={styles.btn}
         onPress={() => {
           formik.handleSubmit();
-          // if (pass && user && pass.length > 8 && user.length > 4) {
-          //   navigation.navigate('Tabs');
-          //   setPass('');
-          //   setUser('');
-          // } else {
-          //   Alert.alert('Incorrect password or user');
-          // }
         }}>
         <Text style={styles.btnText}>Sign in</Text>
       </TouchableOpacity>

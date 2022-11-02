@@ -1,22 +1,48 @@
 /* eslint-disable react-native/no-inline-styles */
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import SwipeableItem from '../components/SwipeableItem';
+import DraggableFlatList from 'react-native-draggable-flatlist';
+import usePhotos from '../hooks/usePhotos';
 
 export const MyPhotosScreen = () => {
+  const {photos, deletePhoto, loadPhotos, photosRefreshControl, setPhotos} =
+    usePhotos();
 
-  // const [photos, setPhotos] = useState([]);
-  // const reqPhotos = async () => {
-  //   const res = await axios.get('https://jsonplaceholder.typicode.com/photos');
-  //   console.log(res.data);
-  //   // setPhotos(res.data);
-  // };
-  // useEffect(() => {
-  //   reqPhotos();
-  // }, []);
+  if (!photos.length) {
+    loadPhotos();
+  }
+  console.log(photos);
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>My Photos Screen</Text>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <DraggableFlatList
+        data={photos}
+        onDragEnd={({data}) => setPhotos(data)}
+        keyExtractor={item => String(item.id)}
+        renderItem={({item, drag, isActive}) => (
+          <SwipeableItem
+            isActive={isActive}
+            drag={drag}
+            item={item}
+            handleDelete={() => deletePhoto(item.id)}
+          />
+        )}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        refreshControl={photosRefreshControl()}
+      />
+
+      {/* <Text>{JSON.stringify(data, null, 2)}</Text> */}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  separator: {
+    height: 2,
+  },
+});
