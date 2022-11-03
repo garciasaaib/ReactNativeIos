@@ -138,3 +138,21 @@ const style = StyleSheet.create({
     marginBottom: 20,
   },
 });
+
+// react-native-biometrics
+// const fingerLog = async () => {
+//   const rnBiometrics = new ReactNativeBiometrics();
+//   const resultObject = await rnBiometrics.simplePrompt({
+//     promptMessage: 'Confirm fingerprint',
+//   });
+//   if (resultObject) {
+//     if (form.remember === true) {
+//       await AsyncStorage.setItem('@storage_Key', 'remember');
+//       await AsyncStorage.setItem('@storage_route', 'BottomNavigation');
+//     }
+//     setForm(initData);
+//     navigation.navigate('BottomNavigation');
+//   } else {
+//     console.log('user cancelled biometric prompt');
+//   }
+// };

@@ -18,7 +18,7 @@ export default function SwipeableItem({
   drag,
   isActive,
 }: any) {
-  const leftSwipe = (progress, dragX) => {
+  const leftSwipe = (dragX: any) => {
     const scale = dragX.interpolate({
       inputRange: [0, 100],
       outputRange: [0, 1],
@@ -26,9 +26,9 @@ export default function SwipeableItem({
     });
     return (
       <TouchableOpacity style={styles.leftSwipe} onPress={handleDelete}>
-        <Animated.Text style={{transform: [{scale}]}}>
+        <Animated.View style={{transform: [{scale}]}}>
           <Icon name="trash-can" size={50} color="white" />
-        </Animated.Text>
+        </Animated.View>
       </TouchableOpacity>
     );
   };

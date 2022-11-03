@@ -2,7 +2,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RootState, AppThunk} from '../store';
-import {userLogin} from '../../api/userConstants';
+import {UserData, userLogin} from '../../api/userConstants';
 import {LoginSchema} from '../../components/LoginForm';
 import {setMessage} from '../messages/messageSlice';
 import {Response} from '../../api/userConstants';
@@ -19,12 +19,13 @@ import {Response} from '../../api/userConstants';
 //     throw e;
 //   }
 // };
-interface UserData {
-  username: string;
-  firstname?: string;
-  lastname?: string;
-  email?: string;
-}
+// interface UserData {
+//   username: string;
+//   firstname?: string;
+//   lastname?: string;
+//   email?: string;
+//   image?: string;
+// }
 interface AuthState {
   isLoggedIn: boolean;
   user?: UserData;
@@ -65,7 +66,6 @@ export const login = createAsyncThunk(
       //  API request
       const {username, password, keep} = formValues;
       const response: Response = userLogin({username, password});
-      // console.log(response);
 
       // manage error
       if (!response.data) {

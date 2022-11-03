@@ -25,6 +25,7 @@ export default function usePhotos() {
   const wait = (timeout: number) => {
     return new Promise((resolve: any) => setTimeout(resolve, timeout));
   };
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     loadPhotos();

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
@@ -13,7 +13,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useAppSelector} from '../context/hooks';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoginStackNavigatorParams} from './LoginStackNavigator';
-import {Text, View} from 'react-native';
+import usePhotos from '../hooks/usePhotos';
 
 interface Props
   extends NativeStackScreenProps<LoginStackNavigatorParams, 'Tabs'> {}
@@ -27,13 +27,18 @@ const Tab = createMaterialTopTabNavigator<MainMaterialTabTopNavigatorParams>();
 
 export const MainMaterialTabTopNavigator = ({navigation}: Props) => {
   const {isLoggedIn} = useAppSelector(state => state.auth);
-
+  const {photos} = usePhotos();
+  let photosLength = useState(0);
   useEffect(() => {
     if (!isLoggedIn) {
       navigation.navigate('Login');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    photosLength[1](photos.length);
+  }, [photos]);
 
   const inset = useSafeAreaInsets();
   type ScreenOptionProps = {
@@ -42,10 +47,11 @@ export const MainMaterialTabTopNavigator = ({navigation}: Props) => {
   };
   return (
     <Tab.Navigator
-      initialRouteName="MyPhotos"
+      initialRouteName="Profile"
       screenOptions={(
         props: ScreenOptionProps,
       ): MaterialTopTabNavigationOptions => ({
+        swipeEnabled: false,
         tabBarIconStyle: {marginTop: inset.top},
         tabBarLabelStyle: {fontSize: 12},
         tabBarIcon({color}) {
@@ -59,35 +65,7 @@ export const MainMaterialTabTopNavigator = ({navigation}: Props) => {
           }
         },
       })}>
-      <Tab.Screen
-        name="Main"
-        options={(): MaterialTopTabNavigationOptions => ({
-          tabBarBadge: () => (
-            <View
-              style={{
-                top: 50,
-                right: 30,
-                backgroundColor: 'red',
-                height: 20,
-                width: 20,
-                borderRadius: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{
-                  // backgroundColor: 'red',
-                  borderRadius: 20,
-                  color: 'white',
-                }}>
-                3
-              </Text>
-            </View>
-          ),
-          // title: 'Main',
-        })}
-        component={MainScreen}
-      />
+      <Tab.Screen name="Main" component={MainScreen} />
       <Tab.Screen name="MyPhotos" component={MyPhotosScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

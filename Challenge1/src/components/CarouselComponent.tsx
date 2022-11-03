@@ -7,7 +7,7 @@ import {ImageInterface} from '../context/image/imageInterface';
 const width = Dimensions.get('window').width;
 export const CarouselComponent = ({items}: {items: ImageInterface[]}) => {
   React.useEffect(() => {
-    console.log('escuchando');
+    // console.log('escuchando');
   }, [items]);
 
   return (

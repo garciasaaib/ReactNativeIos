@@ -4,16 +4,52 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import {styles} from '../themes/generalStyles';
 import {logout} from '../context/auth/authSlice';
 import {useAppDispatch, useAppSelector} from '../context/hooks';
+import ProfilePhoto from '../components/profile/ProfilePhoto';
+import ProfileInfo from '../components/profile/ProfileInfo';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 export const ProfileScreen = () => {
   const {user} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Profile Screen</Text>
-      <Text>{JSON.stringify(user, null, 2)}</Text>
-      <TouchableOpacity style={styles.btn} onPress={() => dispatch(logout())}>
-        <Text style={styles.btnText}>LogOut</Text>
-      </TouchableOpacity>
+    <View style={{flex: 1}}>
+      <View
+        style={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            padding: 15,
+          }}>
+          Personal Info
+        </Text>
+        {user?.image && (
+          <>
+            <ProfilePhoto url={user.image} />
+          </>
+        )}
+      </View>
+
+      <View
+        style={{
+          backgroundColor: 'white',
+          flex: 1,
+          justifyContent: 'space-between',
+        }}>
+        {user && <ProfileInfo user={user} />}
+
+        <View
+          style={{justifyContent: 'center', alignItems: 'center', margin: 10}}>
+          <TouchableOpacity
+            style={[styles.btn, {marginBottom: insets.bottom + 10}]}
+            onPress={() => dispatch(logout())}>
+            <Text style={styles.btnText}>LogOut</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
