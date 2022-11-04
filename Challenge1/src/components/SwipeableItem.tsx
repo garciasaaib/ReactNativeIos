@@ -5,11 +5,11 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import React from 'react';
 import {Swipeable} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Animated} from 'react-native';
 import {ScaleDecorator} from 'react-native-draggable-flatlist';
 
 export default function SwipeableItem({
@@ -18,7 +18,7 @@ export default function SwipeableItem({
   drag,
   isActive,
 }: any) {
-  const leftSwipe = (dragX: any) => {
+  const leftSwipe = (dragX: any, progress) => {
     const scale = dragX.interpolate({
       inputRange: [0, 100],
       outputRange: [0, 1],
@@ -26,9 +26,9 @@ export default function SwipeableItem({
     });
     return (
       <TouchableOpacity style={styles.leftSwipe} onPress={handleDelete}>
-        <Animated.View style={{transform: [{scale}]}}>
-          <Icon name="trash-can" size={50} color="white" />
-        </Animated.View>
+        <View style={styles.leftSwipe}>
+          <Icon name="trash-can" size={50} color="#ccc" />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -73,13 +73,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   leftSwipe: {
-    backgroundColor: 'tomato',
+    // backgroundColor: 'tomato',
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
   leftSwipeText: {
-    backgroundColor: 'tomato',
-    width,
+    // backgroundColor: 'tomato',
+    // width,
   },
 });

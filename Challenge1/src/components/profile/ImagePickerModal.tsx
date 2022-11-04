@@ -1,28 +1,34 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {Pressable, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+interface Props {
+  isVisible: boolean;
+  onClose: () => void;
+  onImageLibraryPress: () => void;
+  onCameraPress: () => void;
+}
 export function ImagePickerModal({
   isVisible,
   onClose,
   onImageLibraryPress,
   onCameraPress,
-}) {
+}: Props) {
+  const insets = useSafeAreaInsets();
   return (
     <Modal
       isVisible={isVisible}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
-      style={styles.modal}>
-      <SafeAreaView style={styles.buttons}>
+      style={[styles.modal]}>
+      <SafeAreaView style={[styles.buttons, {paddingBottom: insets.bottom}]}>
         <Pressable style={styles.button} onPress={onImageLibraryPress}>
-          {/* <Icon name="image" size={25} color="black" /> */}
+          <Icon name="image" size={25} color="black" />
           <Text style={styles.buttonText}>Library</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={onCameraPress}>
-          {/* <Icon name="camera" size={25} color="black" /> */}
+          <Icon name="camera" size={25} color="black" />
           <Text style={styles.buttonText}>Camera</Text>
         </Pressable>
       </SafeAreaView>

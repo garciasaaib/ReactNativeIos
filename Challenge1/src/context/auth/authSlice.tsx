@@ -7,25 +7,6 @@ import {LoginSchema} from '../../components/LoginForm';
 import {setMessage} from '../messages/messageSlice';
 import {Response} from '../../api/userConstants';
 
-// const user = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem('@user');
-//     if (value !== null) {
-//       // value previously stored
-//       return {isLoggedIn: false, user: null};
-//     }
-//     return {isLoggedIn: true, user};
-//   } catch (e) {
-//     throw e;
-//   }
-// };
-// interface UserData {
-//   username: string;
-//   firstname?: string;
-//   lastname?: string;
-//   email?: string;
-//   image?: string;
-// }
 interface AuthState {
   isLoggedIn: boolean;
   user?: UserData;
@@ -94,31 +75,50 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   }
 });
 
+export const updateUserPhoto = createAsyncThunk(
+  'auth/updateUserData',
+  async (newImageUri, thunkApi) => {
+    try {
+      // get the storage session
+      const session = await AsyncStorage.getItem('@auth');
+
+      // handle empty session storage
+      if (!session) {
+        return thunkApi.rejectWithValue(undefined);
+      }
+
+      // update storage photo
+      const user = JSON.parse(session);
+      user.image = newImageUri;
+      await AsyncStorage.setItem('@auth', JSON.stringify(user));
+      return user as UserData;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: builder => {
     builder
-      // .addCase(login.pending, (state, action) => {
-      //   state.status = 'loading';
-      // })
+      .addCase(updateUserPhoto.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       .addCase(sessionStorage.fulfilled, (state, action) => {
-        console.log('Successfully logged');
         state.user = action.payload;
         state.isLoggedIn = true;
       })
       .addCase(sessionStorage.rejected, (state, action) => {
-        console.log('Regected logged');
         state.isLoggedIn = false;
         state.user = undefined;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log('Successfully logged');
         state.user = action.payload;
         state.isLoggedIn = true;
       })
       .addCase(login.rejected, (state, action) => {
-        console.log('Regected logged');
         state.isLoggedIn = false;
         state.user = undefined;
       })
@@ -131,5 +131,4 @@ const authSlice = createSlice({
 });
 
 const {reducer} = authSlice;
-
 export default reducer;

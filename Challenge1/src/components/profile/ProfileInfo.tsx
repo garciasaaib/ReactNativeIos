@@ -11,7 +11,7 @@ export default function ProfileInfo({user}: Props) {
       <View>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>User name</Text>
-          <Text style={styles.infoValue}>{user.email}</Text>
+          <Text style={styles.infoValue}>{user.username}</Text>
         </View>
 
         <View style={styles.infoRow}>

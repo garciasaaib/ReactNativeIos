@@ -7,13 +7,16 @@ import {useAppDispatch, useAppSelector} from '../context/hooks';
 import ProfilePhoto from '../components/profile/ProfilePhoto';
 import ProfileInfo from '../components/profile/ProfileInfo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import ProfileDevice from '../components/profile/ProfileDevice';
+import ProfileLocalization from '../components/profile/ProfileLocalization';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const ProfileScreen = () => {
   const {user} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       <View
         style={{
           width: '100%',
@@ -41,6 +44,9 @@ export const ProfileScreen = () => {
         }}>
         {user && <ProfileInfo user={user} />}
 
+        <ProfileDevice />
+
+        <ProfileLocalization />
         <View
           style={{justifyContent: 'center', alignItems: 'center', margin: 10}}>
           <TouchableOpacity
@@ -50,6 +56,6 @@ export const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };

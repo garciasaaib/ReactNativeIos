@@ -47,7 +47,7 @@ export const MainMaterialTabTopNavigator = ({navigation}: Props) => {
   };
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="MyPhotos"
       screenOptions={(
         props: ScreenOptionProps,
       ): MaterialTopTabNavigationOptions => ({
