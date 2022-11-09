@@ -1,0 +1,6 @@
+### get photos list
+GET https://jsonplaceholder.typicode.com/photos
+
+###
+GET https://api.pexels.com/v1/search?query=people
+Authorization: 563492ad6f917000010000017f0a42400e57458297a585272b88e420

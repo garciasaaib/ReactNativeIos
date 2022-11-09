@@ -55,7 +55,7 @@ export const usePokedex = () => {
         pokemonArray.push({
           name: poke.name,
           id: poke.id,
-          type: poke.types.map(({type}) => type),``
+          type: poke.types.map(({type}) => type),
           order: poke.order,
           image: poke.sprites.other
             ? poke.sprites.other['official-artwork'].front_default
