@@ -7,8 +7,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {PokedexStackParamList} from '../../navigations/PokedexStackNavigator';
-import PokemonFavorite from './PokemonFavorite';
+// import PokemonFavorite from './PokemonFavorite';
 import useAuth from '../../hooks/useAuth';
+
 
 const isIos = Platform.OS === 'ios';
 interface Props {
@@ -19,8 +20,13 @@ interface Props {
   colors: string[];
   id: number;
 }
+/**
+ * Credentials for the pokemon profile view
+ * @param pokemonData All the pokemon data
+ * @returns Pokemon data component
+ */
 export default function PokemonHeader({id, colors, image, name, order}: Props) {
-  const {auth} = useAuth();
+  // const {auth} = useAuth();
   const insets = useSafeAreaInsets();
   const colorStyle = {
     backgroundColor: colors[0],
@@ -29,7 +35,7 @@ export default function PokemonHeader({id, colors, image, name, order}: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<PokedexStackParamList>>();
   return (
-    <View style={[safeStyle, styles.mainContainer]}>
+    <View style={[safeStyle, styles.mainContainer]} key={id}>
       <View style={[styles.bg, colorStyle]} />
 
       <View style={styles.navbar}>
@@ -39,7 +45,7 @@ export default function PokemonHeader({id, colors, image, name, order}: Props) {
           size={20}
           onPress={() => navigation.popToTop()}
         />
-        <>{auth.isLogged && <PokemonFavorite id={id} />}</>
+        {/* <>{auth.isLogged && <PokemonFavorite id={id} />}</> */}
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.textName}>{capitalize(name)}</Text>

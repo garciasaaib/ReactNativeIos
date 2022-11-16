@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     opacity: 0.2,
     fontWeight: 'bold',
     fontSize: 40,
-    top: 50,
+    top: 0,
     left: 10,
   },
 });

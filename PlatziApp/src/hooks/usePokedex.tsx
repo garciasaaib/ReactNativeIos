@@ -4,6 +4,7 @@ import {
   PokemonListResponse,
   PokemonDetailResponse,
   Species,
+  Result,
 } from '../api/pokemonInterfaces';
 import axios from 'axios';
 import {PokemonTypeColor} from '../utils/constants';
@@ -14,9 +15,7 @@ export interface PokemonListItem {
   name: string;
   type: Species[];
   order: number;
-  image:
-    | string
-    | 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.wikidex.net%2Fwiki%2FUnown&psig=AOvVaw3---RKB-is3q5NFNRRsMON&ust=1667248443757000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCJCD3MvmiPsCFQAAAAAdAAAAABAP';
+  image: string | '';
 }
 // type PokemonType = keyof typeof PokemonTypeColor; //REVIEW - key types in enum
 
@@ -27,11 +26,28 @@ export const usePokedex = () => {
   const limit: number = 20;
 
   useEffect(() => {
-    (async () => {
-      await loadPokemons();
-    })();
-    // loadPokemons();
+    loadPokemons();
   }, []);
+
+  async function mapPokemonlist(res: Result[]) {
+    const pokemonArray: PokemonListItem[] = [];
+    for await (const {url} of res) {
+      const poke = (await axios.get<PokemonDetailResponse>(url)).data;
+      pokemonArray.push({
+        name: poke.name,
+        id: poke.id,
+        type: poke.types.map(({type}) => type),
+        order: poke.order,
+        image: poke.sprites.other
+          ? poke.sprites.other['official-artwork'].front_default
+          : poke.sprites.front_default,
+        colors: poke.types.map(({type}): string => {
+          return PokemonTypeColor[type.name as keyof typeof PokemonTypeColor];
+        }),
+      });
+    }
+    return pokemonArray;
+  }
 
   async function loadPokemons() {
     try {
@@ -49,24 +65,9 @@ export const usePokedex = () => {
       } else {
         setIsNext(false);
       }
-      const pokemonArray: PokemonListItem[] = [];
-      for await (const {url} of res.data.results) {
-        const poke = (await axios.get<PokemonDetailResponse>(url)).data;
-        pokemonArray.push({
-          name: poke.name,
-          id: poke.id,
-          type: poke.types.map(({type}) => type),
-          order: poke.order,
-          image: poke.sprites.other
-            ? poke.sprites.other['official-artwork'].front_default
-            : poke.sprites.front_default,
-          colors: poke.types.map(({type}): string => {
-            return PokemonTypeColor[type.name as keyof typeof PokemonTypeColor];
-          }),
-        });
-      }
 
-      setPokedex([...pokedex, ...pokemonArray]);
+      const newList = await mapPokemonlist(res.data.results);
+      setPokedex([...pokedex, ...newList]);
     } catch (error) {
       throw error;
     }

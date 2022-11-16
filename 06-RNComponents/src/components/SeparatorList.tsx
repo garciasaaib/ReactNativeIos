@@ -1,11 +1,9 @@
 import {View} from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import {styles} from '../theme/appTheme';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 export default function SeparatorList() {
-  const {theme} = useContext(ThemeContext);
-  return (
-    <View style={{...styles.separator, borderColor: theme.colors.border}} />
-  );
+  const {colors} = useTheme();
+  return <View style={{...styles.separator, borderColor: colors.border}} />;
 }

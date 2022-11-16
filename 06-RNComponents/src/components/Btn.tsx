@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 interface Props {
   title?: string;
@@ -10,14 +10,14 @@ interface Props {
   top?: boolean;
 }
 const Btn = ({title, onPress, icon}: Props) => {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
 
   return (
     <TouchableOpacity
       style={[
         styles.container,
         icon ? styles.containerIcon : {},
-        {backgroundColor: theme.colors.primary},
+        {backgroundColor: colors.primary},
       ]}
       onPress={onPress}>
       {icon ? (

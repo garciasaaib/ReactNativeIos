@@ -8,39 +8,40 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {Slide, slideData} from '../data/SlideShowData';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import Iconicons from 'react-native-vector-icons/Ionicons';
 import HeadScreen from '../components/HeadScreen';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'SlidesScreen'> {}
 export default function SlidesScreen({navigation}: Props) {
+  const {colors} = useTheme();
+
+  // selectedSlide para poder mover el visualizador
   const [selectedSlide, setSelectedSlide] = useState<number>(0);
-  const {theme} = useContext(ThemeContext);
 
   const {width} = Dimensions.get('screen');
 
+  // item en de cada slides
   const renderItem = (item: Slide) => {
     return (
       <View
-        style={[
-          styles.slide,
-          {borderWidth: 1, borderColor: theme.colors.border},
-        ]}>
+        style={[styles.slide, {borderWidth: 1, borderColor: colors.border}]}>
         <Image style={styles.slideImage} source={item.img} />
         <Text style={styles.slideTitle}>{item.title}</Text>
-        <Text style={[styles.slideDesc, {color: theme.colors.text}]}>
+        <Text style={[styles.slideDesc, {color: colors.text}]}>
           {item.desc}
         </Text>
       </View>
     );
   };
 
+  // button para ir a otra vista
   const Btn = () => {
     return (
       <TouchableOpacity
@@ -69,12 +70,14 @@ export default function SlidesScreen({navigation}: Props) {
   };
   return (
     <SafeAreaView style={{flex: 1, paddingTop: 50}}>
+      {/* Componente head */}
       <HeadScreen
         onPress={() => navigation.popToTop()}
         top={false}
         title={'Slides ' + selectedSlide}
       />
 
+      {/* Componente carousel */}
       <Carousel
         data={slideData}
         renderItem={({item}: any) => renderItem(item)}
@@ -83,6 +86,8 @@ export default function SlidesScreen({navigation}: Props) {
         layout="default"
         onSnapToItem={(index: number) => setSelectedSlide(index)}
       />
+
+      {/* Paginacion que  */}
       <View
         style={{
           flexDirection: 'row',

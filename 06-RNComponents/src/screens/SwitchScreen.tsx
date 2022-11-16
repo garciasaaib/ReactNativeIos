@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import CustomSwitch from '../components/CustomSwitch';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import HeadScreen from '../components/HeadScreen';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 interface Switches {
   isActive: boolean;
@@ -15,7 +15,7 @@ interface Switches {
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'SwitchScreen'> {}
 export default function SwitchScreen({navigation}: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
 
   const [state, setState] = useState<Switches>({
     isActive: true,
@@ -29,7 +29,7 @@ export default function SwitchScreen({navigation}: Props) {
     <View style={{marginHorizontal: 10}}>
       <HeadScreen title="Switches" onPress={() => navigation.popToTop()} />
       <View style={styles.switchRow}>
-        <Text style={[styles.text, {color: theme.colors.text}]}> isActive</Text>
+        <Text style={[styles.text, {color: colors.text}]}> isActive</Text>
         <CustomSwitch
           isOn={state.isActive}
           onChange={value => handleChange(value, 'isActive')}
@@ -37,7 +37,7 @@ export default function SwitchScreen({navigation}: Props) {
       </View>
 
       <View style={styles.switchRow}>
-        <Text style={[styles.text, {color: theme.colors.text}]}> isHungry</Text>
+        <Text style={[styles.text, {color: colors.text}]}> isHungry</Text>
         <CustomSwitch
           isOn={state.isHungry}
           onChange={value => handleChange(value, 'isHungry')}
@@ -45,14 +45,14 @@ export default function SwitchScreen({navigation}: Props) {
       </View>
 
       <View style={styles.switchRow}>
-        <Text style={[styles.text, {color: theme.colors.text}]}> isHappy</Text>
+        <Text style={[styles.text, {color: colors.text}]}> isHappy</Text>
         <CustomSwitch
           isOn={state.isHappy}
           onChange={value => handleChange(value, 'isHappy')}
         />
       </View>
 
-      <Text style={[styles.text, {color: theme.colors.text}]}>
+      <Text style={[styles.text, {color: colors.text}]}>
         {JSON.stringify(state, null, 2)}
       </Text>
     </View>

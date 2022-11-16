@@ -6,6 +6,7 @@ import {usePokedex} from '../../hooks/usePokedex';
 import PokedexCard from './PokedexCard';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+const isIos = Platform.OS === 'ios'
 export default function PokedexList() {
   const {pokedex, loadPokemons, isNext} = usePokedex();
   const insets = useSafeAreaInsets();
@@ -22,8 +23,9 @@ export default function PokedexList() {
       renderItem={({item}) => <PokedexCard pokemon={item} />}
       contentContainerStyle={[
         styles.listItem,
-        {paddingTop: Platform.OS === 'ios' ? insets.top : 10},
+        {paddingTop: isIos ? insets.top + 50 : 50},
       ]}
+      // infinite scroll
       onEndReached={loadMore} // funcion llamada al llegar al final de la lista
       onEndReachedThreshold={0.1} // medida del observer para la funcion de onEndReached
       ListFooterComponent={

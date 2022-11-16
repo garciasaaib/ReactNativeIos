@@ -16,7 +16,7 @@ import InfiniteScrollImagesScreen from '../screens/InfiniteScrollImagesScreen';
 import SlidesScreen from '../screens/SlidesScreen';
 import SlidesAnimatedScreen from '../screens/SlidesAnimatedScreen';
 import ChangeThemeScreen from '../screens/ChangeThemeScreen';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useTheme} from '@react-navigation/native';
 import {ThemeContext} from '../context/themeContext/ThemeContext';
 import {StatusBar, View} from 'react-native';
 
@@ -39,14 +39,19 @@ export type RootStackParamList = {
 };
 const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function StackNavigator() {
+  /** we get the theme from the context, but it could be in a constant or somewhere else */
   const {theme} = useContext(ThemeContext);
+  /** useTheme contains the current theme in the navigator */
+  const {colors} = useTheme();
   return (
     <NavigationContainer theme={theme}>
+      {/* here in NavigationContainer we set the variable theme */}
+      {/* StatusBar has the battery, clock & wifi are here, and we can set the theme in there too */}
       <StatusBar
         barStyle={theme.dark ? 'light-content' : 'dark-content'}
-        backgroundColor={theme.colors.background}
+        backgroundColor={colors.background}
       />
-      <View style={{backgroundColor: theme.colors.background, flex: 1}}>
+      <View style={{backgroundColor: colors.background, flex: 1}}>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,

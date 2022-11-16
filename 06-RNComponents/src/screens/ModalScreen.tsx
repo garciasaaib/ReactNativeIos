@@ -7,16 +7,17 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import Btn from '../components/Btn';
 import HeadScreen from '../components/HeadScreen';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 const {width, height} = Dimensions.get('screen');
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ModalScreen'> {}
 export default function ModalScreen({navigation}: Props) {
+  // la visibilidad del modal se basa en el estado de esta variable
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <View>
@@ -42,14 +43,13 @@ export default function ModalScreen({navigation}: Props) {
 }
 // this can be anything you want
 function ModalContent({onPress}: {onPress: () => void}) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
 
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalBackground} />
-      <View
-        style={[styles.modalView, {backgroundColor: theme.colors.background}]}>
-        <Text style={[styles.modalText, {color: theme.colors.text}]}>
+      <View style={[styles.modalView, {backgroundColor: colors.background}]}>
+        <Text style={[styles.modalText, {color: colors.text}]}>
           Hello World!
         </Text>
         <Pressable

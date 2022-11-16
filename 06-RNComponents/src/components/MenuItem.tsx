@@ -1,12 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import {MenuItem} from '../interfaces/appInterfaces';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {RootStackParamList} from '../navigartors/StackNavigator';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 interface ItemProps {
   item: MenuItem;
@@ -14,7 +13,7 @@ interface ItemProps {
   separators?: any;
 }
 export default function MenuiItem({item}: ItemProps) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -26,17 +25,15 @@ export default function MenuiItem({item}: ItemProps) {
       }>
       <Icon
         name={item.icon}
-        color={theme.colors.primary}
+        color={colors.primary}
         size={23}
         style={itemStyles.itemIcon}
       />
-      <Text style={{color: theme.colors.text, paddingLeft: 10}}>
-        {item.title}
-      </Text>
+      <Text style={{color: colors.text, paddingLeft: 10}}>{item.title}</Text>
       <View style={{flex: 1}} />
       <Icon
         name="chevron-forward-outline"
-        color={theme.colors.primary}
+        color={colors.primary}
         size={23}
         style={itemStyles.itemIcon}
       />

@@ -5,23 +5,26 @@ import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import HeadScreen from '../components/HeadScreen';
 import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ChangeThemeScreen'> {}
 export default function ChangeThemeScreen({navigation}: Props) {
-  const {setDarkTheme, setLightTheme, theme} = useContext(ThemeContext);
+  const {dark} = useTheme();
+  const {setDarkTheme, setLightTheme} = useContext(ThemeContext);
+  const toggleTheme = () => {
+    if (dark) {
+      setLightTheme();
+    } else {
+      setDarkTheme();
+    }
+  };
   return (
     <View>
       <HeadScreen title="Change Theme" onPress={() => navigation.popToTop()} />
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => {
-          if (theme.dark) {
-            setLightTheme();
-          } else {
-            setDarkTheme();
-          }
-        }}
+        onPress={toggleTheme}
         style={{
           width: 150,
           height: 50,

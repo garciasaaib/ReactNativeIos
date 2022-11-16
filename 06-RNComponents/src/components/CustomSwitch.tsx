@@ -1,13 +1,13 @@
 import {Switch} from 'react-native';
-import React, {useContext, useState} from 'react';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import React, {useState} from 'react';
+import {useTheme} from '@react-navigation/native';
 
 interface Props {
   isOn: boolean;
   onChange: (value: boolean) => void;
 }
 export default function CustomSwitch({isOn, onChange}: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors, dark} = useTheme();
 
   const [isEnabled, setIsEnabled] = useState<boolean>(isOn);
 
@@ -20,7 +20,7 @@ export default function CustomSwitch({isOn, onChange}: Props) {
     <Switch
       trackColor={{
         false: '#d9d9db',
-        true: !theme.dark ? '#81b0ff' : theme.colors.primary,
+        true: !dark ? '#81b0ff' : colors.primary,
       }}
       thumbColor={'#f4f3f4'}
       // ios_backgroundColor="#3e3e3e"

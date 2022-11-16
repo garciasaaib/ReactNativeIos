@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {Slide, slideData} from '../data/SlideShowData';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -17,12 +17,12 @@ import {RootStackParamList} from '../navigartors/StackNavigator';
 import Iconicons from 'react-native-vector-icons/Ionicons';
 import {useAnimation} from '../hook/useAnimation';
 import HeadScreen from '../components/HeadScreen';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'SlidesAnimatedScreen'> {}
 export default function SlidesAnimatedScreen({navigation}: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
   const [selectedSlide, setSelectedSlide] = useState<number>(0);
   const isVisible = useRef(false);
   const {width} = Dimensions.get('screen');
@@ -32,7 +32,7 @@ export default function SlidesAnimatedScreen({navigation}: Props) {
       <View style={styles.slide}>
         <Image style={styles.slideImage} source={item.img} />
         <Text style={styles.slideTitle}>{item.title}</Text>
-        <Text style={[styles.slideDesc, {color: theme.colors.text}]}>
+        <Text style={[styles.slideDesc, {color: colors.text}]}>
           {item.desc}
         </Text>
       </View>
@@ -50,18 +50,8 @@ export default function SlidesAnimatedScreen({navigation}: Props) {
             }
           }}
           activeOpacity={0.8}
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignContent: 'center',
-            backgroundColor: '#5856d6',
-            width: 150,
-            height: 50,
-            borderRadius: 10,
-          }}>
-          <Text style={{fontSize: 25, color: 'white', alignSelf: 'center'}}>
-            Go In
-          </Text>
+          style={styles.btn}>
+          <Text style={styles.btnText}>Go In</Text>
           <Iconicons
             style={{alignSelf: 'center'}}
             name="chevron-forward-outline"
@@ -95,12 +85,7 @@ export default function SlidesAnimatedScreen({navigation}: Props) {
           }
         }}
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}>
+      <View style={styles.paginationWrapper}>
         <Pagination
           dotsLength={slideData.length}
           activeDotIndex={selectedSlide}
@@ -138,5 +123,20 @@ const styles = StyleSheet.create({
     width: 300,
     height: 400,
     resizeMode: 'center',
+  },
+  btn: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: '#5856d6',
+    width: 150,
+    height: 50,
+    borderRadius: 10,
+  },
+  btnText: {fontSize: 25, color: 'white', alignSelf: 'center'},
+  paginationWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });

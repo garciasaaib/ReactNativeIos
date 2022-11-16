@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, TouchableOpacity} from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import Iconicons from 'react-native-vector-icons/Ionicons';
 import HeaderList from './HeaderList';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 interface Props {
   title: string;
@@ -17,7 +17,7 @@ export default function HeadScreen({
   bg = '',
   top = true,
 }: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
   return (
     <View
       style={{
@@ -26,11 +26,7 @@ export default function HeadScreen({
         justifyContent: 'space-between',
       }}>
       <TouchableOpacity onPress={onPress}>
-        <Iconicons
-          name="chevron-back-outline"
-          size={35}
-          color={theme.colors.text}
-        />
+        <Iconicons name="chevron-back-outline" size={35} color={colors.text} />
       </TouchableOpacity>
       <HeaderList title={title} bg={bg} top={top} />
       <View />

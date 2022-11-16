@@ -10,25 +10,25 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Btn from '../components/Btn';
 import CustomSwitch from '../components/CustomSwitch';
 import FormScreenLogics from '../utils/FormScreenLogics';
 import HeadScreen from '../components/HeadScreen';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 const ios = Platform.OS === 'ios';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'FormScreen'> {}
 export default function FormScreen({navigation}: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
   const {values, handleChangeField, handleSubmit, errors} = FormScreenLogics();
   const inputStyle = [
     styles.input,
-    {borderColor: theme.colors.border, color: theme.colors.text},
+    {borderColor: colors.border, color: colors.text},
   ];
   /**
    * Para poder hacer scroll cuando aparece un keyboard en la pantalla se utiliza
@@ -57,7 +57,7 @@ export default function FormScreen({navigation}: Props) {
                 autoCapitalize="words"
                 autoComplete="off"
                 autoCorrect={false}
-                placeholderTextColor={theme.colors.border}
+                placeholderTextColor={colors.border}
               />
               <View>
                 {errors.name && (
@@ -76,7 +76,7 @@ export default function FormScreen({navigation}: Props) {
                 autoCapitalize="none"
                 autoComplete="off"
                 autoCorrect={false}
-                placeholderTextColor={theme.colors.border}
+                placeholderTextColor={colors.border}
               />
               <View>
                 {errors.name && (
@@ -95,7 +95,7 @@ export default function FormScreen({navigation}: Props) {
                 autoComplete="off"
                 onChangeText={e => handleChangeField(e, 'phone')}
                 autoCorrect={false}
-                placeholderTextColor={theme.colors.border}
+                placeholderTextColor={colors.border}
               />
               <View>
                 {errors.phone && (
@@ -115,7 +115,7 @@ export default function FormScreen({navigation}: Props) {
                 autoComplete="off"
                 autoCorrect={false}
                 secureTextEntry={true}
-                placeholderTextColor={theme.colors.border}
+                placeholderTextColor={colors.border}
               />
               <View>
                 {errors.password && (
@@ -125,9 +125,8 @@ export default function FormScreen({navigation}: Props) {
             </View>
 
             <View style={{margin: 10}}>
-              <View
-                style={[styles.switchRow, {borderColor: theme.colors.border}]}>
-                <Text style={[styles.text, {color: theme.colors.text}]}>
+              <View style={[styles.switchRow, {borderColor: colors.border}]}>
+                <Text style={[styles.text, {color: colors.text}]}>
                   {' '}
                   isHungry
                 </Text>
@@ -136,7 +135,7 @@ export default function FormScreen({navigation}: Props) {
                   onChange={e => handleChangeField(e, 'subscribe')}
                 />
               </View>
-              <Text style={{color: theme.colors.text}}>
+              <Text style={{color: colors.text}}>
                 {JSON.stringify(values, null, 2)}
               </Text>
               <Btn title="Submit" onPress={() => handleSubmit()} />

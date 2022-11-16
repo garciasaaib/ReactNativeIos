@@ -10,6 +10,7 @@ import HeadScreen from '../components/HeadScreen';
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'Animation101Screen'> {}
 export default function Animation101Screen({navigation}: Props): JSX.Element {
+  // valores y accionables para la animacion de components
   const {fadeIn, fadeOut, opacity, verticalTop, verticalTopIn, verticalTopOut} =
     useAnimation(0.1, -157);
   return (

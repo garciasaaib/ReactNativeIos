@@ -10,11 +10,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import HeadScreen from '../components/HeadScreen';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 
 const ios = Platform.OS === 'ios';
 interface State {
@@ -26,10 +26,10 @@ interface State {
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'TextInputScreen'> {}
 export default function TextInputScreen({navigation}: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
   const inputStyle = [
     styles.input,
-    {borderColor: theme.colors.border, color: theme.colors.text},
+    {borderColor: colors.border, color: colors.text},
   ];
   const [state, setState] = React.useState<State>({
     name: '',
@@ -65,7 +65,7 @@ export default function TextInputScreen({navigation}: Props) {
               keyboardType="default"
               autoCapitalize="words"
               autoComplete="off"
-              placeholderTextColor={theme.colors.border}
+              placeholderTextColor={colors.border}
               autoCorrect={false}
             />
             <TextInput
@@ -76,7 +76,7 @@ export default function TextInputScreen({navigation}: Props) {
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="off"
-              placeholderTextColor={theme.colors.border}
+              placeholderTextColor={colors.border}
               autoCorrect={false}
             />
             <TextInput
@@ -87,17 +87,17 @@ export default function TextInputScreen({navigation}: Props) {
               autoCapitalize="none"
               autoComplete="off"
               onChangeText={e => onChangeText(e, 'phone')}
-              placeholderTextColor={theme.colors.border}
+              placeholderTextColor={colors.border}
               autoCorrect={false}
             />
             <View style={{marginHorizontal: 10}}>
-              <Text style={{color: theme.colors.text}}>
+              <Text style={{color: colors.text}}>
                 {JSON.stringify(state, null, 2)}
               </Text>
-              <Text style={{color: theme.colors.text}}>
+              <Text style={{color: colors.text}}>
                 {JSON.stringify(state, null, 2)}
               </Text>
-              <Text style={{color: theme.colors.text}}>
+              <Text style={{color: colors.text}}>
                 {JSON.stringify(state, null, 2)}
               </Text>
             </View>
@@ -111,7 +111,7 @@ export default function TextInputScreen({navigation}: Props) {
               autoCapitalize="none"
               autoComplete="off"
               autoCorrect={false}
-              placeholderTextColor={theme.colors.border}
+              placeholderTextColor={colors.border}
               secureTextEntry={true}
             />
             <View style={{height: ios ? 100 : 30}} />

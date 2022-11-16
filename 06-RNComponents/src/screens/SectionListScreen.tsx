@@ -1,11 +1,11 @@
 import {SectionList, StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import HeaderList from '../components/HeaderList';
 import SeparatorList from '../components/SeparatorList';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import HeadScreen from '../components/HeadScreen';
-import {ThemeContext} from '../context/themeContext/ThemeContext';
+import {useTheme} from '@react-navigation/native';
 const DATA = [
   {
     title: 'Main dishes',
@@ -40,7 +40,7 @@ const Item = ({title}: {title: string}) => (
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'SectionListScreen'> {}
 export default function SectionListScreen({navigation}: Props) {
-  const {theme} = useContext(ThemeContext);
+  const {colors} = useTheme();
   return (
     <View style={styles.container}>
       <SectionList
@@ -61,7 +61,7 @@ export default function SectionListScreen({navigation}: Props) {
         }
         // Aplica en cada seccion
         renderSectionHeader={({section: {title}}) => (
-          <HeaderList title={title} bg={theme.colors.background} />
+          <HeaderList title={title} bg={colors.background} />
         )}
         renderSectionFooter={({section: {data}}) => (
           <HeaderList top={false} title={`Total: ${data.length}`} bg="pink" />
