@@ -1,7 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Dimensions, RefreshControl, ScrollView, Text, View} from 'react-native';
-import React from 'react';
-import HeaderList from '../components/HeaderList';
+import React, {useContext} from 'react';
+import {RootStackParamList} from '../navigartors/StackNavigator';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import HeadScreen from '../components/HeadScreen';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 /**
  * El pull to refresh funciona en ScrollView & flatList
@@ -15,7 +18,11 @@ const wait = async (timeout: number) => {
     setTimeout(res, timeout);
   });
 };
-export default function PullToRefreshScreen() {
+
+interface Props
+  extends NativeStackScreenProps<RootStackParamList, 'PullToRefreshScreen'> {}
+export default function PullToRefreshScreen({navigation}: Props) {
+  const {theme} = useContext(ThemeContext);
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -49,8 +56,11 @@ export default function PullToRefreshScreen() {
         />
       }>
       <View>
-        <HeaderList title="Pull to Refresh" />
-        <Text>PullToRefreshScreen</Text>
+        <HeadScreen
+          onPress={() => navigation.popToTop()}
+          title="Pull to Refresh"
+        />
+        <Text style={{color: theme.colors.text}}>PullToRefreshScreen</Text>
       </View>
     </ScrollView>
   );

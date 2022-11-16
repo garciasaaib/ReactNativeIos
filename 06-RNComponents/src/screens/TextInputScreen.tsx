@@ -10,10 +10,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React from 'react';
-import HeaderList from '../components/HeaderList';
+import React, {useContext} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigartors/StackNavigator';
+import HeadScreen from '../components/HeadScreen';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 const ios = Platform.OS === 'ios';
 interface State {
@@ -24,7 +25,12 @@ interface State {
 }
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'TextInputScreen'> {}
-export default function TextInputScreen({}: Props) {
+export default function TextInputScreen({navigation}: Props) {
+  const {theme} = useContext(ThemeContext);
+  const inputStyle = [
+    styles.input,
+    {borderColor: theme.colors.border, color: theme.colors.text},
+  ];
   const [state, setState] = React.useState<State>({
     name: '',
     email: '',
@@ -47,43 +53,57 @@ export default function TextInputScreen({}: Props) {
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <>
-            <HeaderList title="Text Inputs" />
+            <HeadScreen
+              onPress={() => navigation.popToTop()}
+              title="Text Inputs"
+            />
             <TextInput
-              style={styles.input}
+              style={inputStyle}
               onChangeText={e => onChangeText(e, 'name')}
               value={state.name}
               placeholder="Full name"
               keyboardType="default"
               autoCapitalize="words"
               autoComplete="off"
+              placeholderTextColor={theme.colors.border}
               autoCorrect={false}
             />
             <TextInput
-              style={styles.input}
+              style={inputStyle}
               onChangeText={e => onChangeText(e, 'email')}
               value={state.email}
               placeholder="Email address"
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="off"
+              placeholderTextColor={theme.colors.border}
               autoCorrect={false}
             />
             <TextInput
-              style={styles.input}
+              style={inputStyle}
               value={state.phone}
               placeholder="Phone number"
               keyboardType="phone-pad"
               autoCapitalize="none"
               autoComplete="off"
               onChangeText={e => onChangeText(e, 'phone')}
+              placeholderTextColor={theme.colors.border}
               autoCorrect={false}
             />
-            <Text>{JSON.stringify(state, null, 2)}</Text>
-            <Text>{JSON.stringify(state, null, 2)}</Text>
-            <Text>{JSON.stringify(state, null, 2)}</Text>
+            <View style={{marginHorizontal: 10}}>
+              <Text style={{color: theme.colors.text}}>
+                {JSON.stringify(state, null, 2)}
+              </Text>
+              <Text style={{color: theme.colors.text}}>
+                {JSON.stringify(state, null, 2)}
+              </Text>
+              <Text style={{color: theme.colors.text}}>
+                {JSON.stringify(state, null, 2)}
+              </Text>
+            </View>
 
             <TextInput
-              style={styles.input}
+              style={inputStyle}
               onChangeText={e => onChangeText(e, 'password')}
               value={state.password}
               placeholder="Password"
@@ -91,6 +111,7 @@ export default function TextInputScreen({}: Props) {
               autoCapitalize="none"
               autoComplete="off"
               autoCorrect={false}
+              placeholderTextColor={theme.colors.border}
               secureTextEntry={true}
             />
             <View style={{height: ios ? 100 : 30}} />
@@ -108,7 +129,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
-    borderColor: 'iris',
-    backgroundColor: 'iris',
   },
 });

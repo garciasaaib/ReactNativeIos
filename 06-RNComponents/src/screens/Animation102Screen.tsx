@@ -1,12 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
 import {Animated, PanResponder, StyleSheet, View} from 'react-native';
 import React, {useRef} from 'react';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import HeadScreen from '../components/HeadScreen';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'Animation102Screen'> {}
-export default function Animation102Screen({}: Props): JSX.Element {
+export default function Animation102Screen({navigation}: Props): JSX.Element {
   // variable con valores X & Y vinculadas a un elemento animado
   const pan = useRef(new Animated.ValueXY()).current;
 
@@ -39,12 +39,15 @@ export default function Animation102Screen({}: Props): JSX.Element {
 
   // aplicamos el event listener al componente a animar
   return (
-    <View style={styles.container}>
-      <Animated.View
-        {...panResponder.panHandlers}
-        style={[pan.getLayout(), styles.box]}
-      />
-    </View>
+    <>
+      <HeadScreen title="Animation 102" onPress={() => navigation.popToTop()} />
+      <View style={styles.container}>
+        <Animated.View
+          {...panResponder.panHandlers}
+          style={[pan.getLayout(), styles.box]}
+        />
+      </View>
+    </>
   );
 }
 

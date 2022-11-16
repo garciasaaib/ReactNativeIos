@@ -1,12 +1,14 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import HeaderList from '../components/HeaderList';
+import React, {useContext} from 'react';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import HeadScreen from '../components/HeadScreen';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'InfiniteScrollScreen'> {}
-export default function InfiniteScrollScreen({}: Props) {
+export default function InfiniteScrollScreen({navigation}: Props) {
+  const {theme} = useContext(ThemeContext);
   const [numbers, setNumbers] = React.useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const loadMore = () => {
@@ -19,7 +21,9 @@ export default function InfiniteScrollScreen({}: Props) {
 
   const renderItem = ({item}: any) => (
     <View style={styles.row}>
-      <Text style={styles.rowText}>{item.toString()}</Text>
+      <Text style={[styles.rowText, {color: theme.colors.text}]}>
+        {item.toString()}
+      </Text>
     </View>
   );
   return (
@@ -28,7 +32,12 @@ export default function InfiniteScrollScreen({}: Props) {
         data={numbers}
         keyExtractor={(_, index) => index.toString()}
         renderItem={renderItem}
-        ListHeaderComponent={<HeaderList title="Infinite Scroll" />}
+        ListHeaderComponent={
+          <HeadScreen
+            onPress={() => navigation.popToTop()}
+            title="Infinite Scroll"
+          />
+        }
         onEndReached={() => loadMore()}
         onEndReachedThreshold={0.2}
       />
@@ -42,12 +51,9 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
   },
   rowText: {
     fontSize: 30,
   },
-  container: {
-    backgroundColor: 'grey',
-  },
+  container: {},
 });

@@ -2,13 +2,13 @@ import {View, StyleSheet, Alert} from 'react-native';
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigartors/StackNavigator';
-import HeaderList from '../components/HeaderList';
 import Btn from '../components/Btn';
 import prompt from 'react-native-prompt-android';
+import HeadScreen from '../components/HeadScreen';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'AlertScreen'> {}
-export default function AlertScreen({}: Props) {
+export default function AlertScreen({navigation}: Props) {
   /**
    * Alerts have an title, content and buttons
    * @returns
@@ -101,7 +101,7 @@ export default function AlertScreen({}: Props) {
   };
   return (
     <>
-      <HeaderList title="Alerts" />
+      <HeadScreen onPress={() => navigation.popToTop()} title="Alerts" />
       <View style={styles.container}>
         <Btn title={'2-Button Alert'} onPress={createTwoButtonAlert} />
         <Btn title={'3-Button Alert'} onPress={createThreeButtonAlert} />

@@ -1,6 +1,7 @@
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 interface Props {
   title?: string;
@@ -9,9 +10,15 @@ interface Props {
   top?: boolean;
 }
 const Btn = ({title, onPress, icon}: Props) => {
+  const {theme} = useContext(ThemeContext);
+
   return (
     <TouchableOpacity
-      style={[styles.container, icon ? styles.containerIcon : {}]}
+      style={[
+        styles.container,
+        icon ? styles.containerIcon : {},
+        {backgroundColor: theme.colors.primary},
+      ]}
       onPress={onPress}>
       {icon ? (
         <Icon name={icon} size={20} />

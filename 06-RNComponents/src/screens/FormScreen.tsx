@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -9,21 +10,26 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import HeaderList from '../components/HeaderList';
 import Btn from '../components/Btn';
 import CustomSwitch from '../components/CustomSwitch';
-import FormScreenLogics from './FormScreenLogics';
+import FormScreenLogics from '../utils/FormScreenLogics';
+import HeadScreen from '../components/HeadScreen';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 const ios = Platform.OS === 'ios';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'FormScreen'> {}
-export default function FormScreen({}: Props) {
+export default function FormScreen({navigation}: Props) {
+  const {theme} = useContext(ThemeContext);
   const {values, handleChangeField, handleSubmit, errors} = FormScreenLogics();
-
+  const inputStyle = [
+    styles.input,
+    {borderColor: theme.colors.border, color: theme.colors.text},
+  ];
   /**
    * Para poder hacer scroll cuando aparece un keyboard en la pantalla se utiliza
    * KeyboardAvoidingView con el behavior, y debe contener un Scrollview dentro
@@ -37,10 +43,13 @@ export default function FormScreen({}: Props) {
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <>
-            <HeaderList title="value Inputs" />
+            <HeadScreen
+              onPress={() => navigation.popToTop()}
+              title="value Inputs"
+            />
             <View>
               <TextInput
-                style={styles.input}
+                style={inputStyle}
                 onChangeText={e => handleChangeField(e, 'name')}
                 value={values.name}
                 placeholder="Full name"
@@ -48,6 +57,7 @@ export default function FormScreen({}: Props) {
                 autoCapitalize="words"
                 autoComplete="off"
                 autoCorrect={false}
+                placeholderTextColor={theme.colors.border}
               />
               <View>
                 {errors.name && (
@@ -58,7 +68,7 @@ export default function FormScreen({}: Props) {
 
             <View>
               <TextInput
-                style={styles.input}
+                style={inputStyle}
                 onChangeText={e => handleChangeField(e, 'email')}
                 value={values.email}
                 placeholder="Email address"
@@ -66,6 +76,7 @@ export default function FormScreen({}: Props) {
                 autoCapitalize="none"
                 autoComplete="off"
                 autoCorrect={false}
+                placeholderTextColor={theme.colors.border}
               />
               <View>
                 {errors.name && (
@@ -76,7 +87,7 @@ export default function FormScreen({}: Props) {
 
             <View>
               <TextInput
-                style={styles.input}
+                style={inputStyle}
                 value={values.phone}
                 placeholder="Phone number"
                 keyboardType="phone-pad"
@@ -84,6 +95,7 @@ export default function FormScreen({}: Props) {
                 autoComplete="off"
                 onChangeText={e => handleChangeField(e, 'phone')}
                 autoCorrect={false}
+                placeholderTextColor={theme.colors.border}
               />
               <View>
                 {errors.phone && (
@@ -94,7 +106,7 @@ export default function FormScreen({}: Props) {
 
             <View>
               <TextInput
-                style={styles.input}
+                style={inputStyle}
                 onChangeText={e => handleChangeField(e, 'password')}
                 value={values.password}
                 placeholder="Password"
@@ -103,6 +115,7 @@ export default function FormScreen({}: Props) {
                 autoComplete="off"
                 autoCorrect={false}
                 secureTextEntry={true}
+                placeholderTextColor={theme.colors.border}
               />
               <View>
                 {errors.password && (
@@ -111,16 +124,24 @@ export default function FormScreen({}: Props) {
               </View>
             </View>
 
-            <View style={styles.switchRow}>
-              <Text style={styles.text}> isHungry</Text>
-              <CustomSwitch
-                isOn={values.subscribe}
-                onChange={e => handleChangeField(e, 'subscribe')}
-              />
+            <View style={{margin: 10}}>
+              <View
+                style={[styles.switchRow, {borderColor: theme.colors.border}]}>
+                <Text style={[styles.text, {color: theme.colors.text}]}>
+                  {' '}
+                  isHungry
+                </Text>
+                <CustomSwitch
+                  isOn={values.subscribe}
+                  onChange={e => handleChangeField(e, 'subscribe')}
+                />
+              </View>
+              <Text style={{color: theme.colors.text}}>
+                {JSON.stringify(values, null, 2)}
+              </Text>
+              <Btn title="Submit" onPress={() => handleSubmit()} />
+              <View style={styles.bottomKbrd} />
             </View>
-            <Text>{JSON.stringify(values, null, 2)}</Text>
-            <Btn title="Submit" onPress={() => handleSubmit()} />
-            <View style={styles.bottomKbrd} />
           </>
         </TouchableWithoutFeedback>
       </ScrollView>
@@ -135,8 +156,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
-    borderColor: 'iris',
-    backgroundColor: 'iris',
+    // borderColor: 'iris',
+    // backgroundColor: 'iris',
   },
   bottomKbrd: {height: ios ? 100 : 30},
   switchRow: {
@@ -144,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    // borderBottomColor: '#ccc',
     paddingVertical: ios ? 5 : 0,
   },
   text: {

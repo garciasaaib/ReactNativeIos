@@ -1,7 +1,11 @@
 import {SectionList, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import HeaderList from '../components/HeaderList';
 import SeparatorList from '../components/SeparatorList';
+import {RootStackParamList} from '../navigartors/StackNavigator';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import HeadScreen from '../components/HeadScreen';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 const DATA = [
   {
     title: 'Main dishes',
@@ -33,7 +37,10 @@ const Item = ({title}: {title: string}) => (
     <Text style={styles.title}>{title}</Text>
   </View>
 );
-export default function SectionListScreen() {
+interface Props
+  extends NativeStackScreenProps<RootStackParamList, 'SectionListScreen'> {}
+export default function SectionListScreen({navigation}: Props) {
+  const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
       <SectionList
@@ -42,13 +49,19 @@ export default function SectionListScreen() {
         renderItem={({item}) => <Item title={item} />}
         stickySectionHeadersEnabled // android
         // aplica en el contenedor de listas
-        ListHeaderComponent={<HeaderList title="Section List" bg="white" />}
+        ListHeaderComponent={
+          <HeadScreen
+            title="Section List"
+            // bg="white"
+            onPress={() => navigation.popToTop()}
+          />
+        }
         ListFooterComponent={
           <HeaderList top={false} title={`There are ${DATA.length} lists`} />
         }
         // Aplica en cada seccion
         renderSectionHeader={({section: {title}}) => (
-          <HeaderList title={title} bg="white" />
+          <HeaderList title={title} bg={theme.colors.background} />
         )}
         renderSectionFooter={({section: {data}}) => (
           <HeaderList top={false} title={`Total: ${data.length}`} bg="pink" />

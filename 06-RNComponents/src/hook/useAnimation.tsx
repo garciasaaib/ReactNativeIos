@@ -9,22 +9,22 @@ export const useAnimation = (
   const opacity = useRef(new Animated.Value(initOpacity)).current;
   const verticalTop = useRef(new Animated.Value(0)).current;
 
-  const fadeIn = (duration: number = 300): void => {
+  const fadeIn = (duration: number = 3000): void => {
     // Funcion para disparar una animacion con tiempo
     // timing: se aplicara a travex del tiempo
     // opacity: propiedad que se editara
     // start: ejecuta esta animacion
     Animated.timing(opacity, {
       toValue: 1, // hacia que valor
-      duration, // la duracion de este cambio
+      duration: duration, // la duracion de este cambio
       useNativeDriver: true,
-    }).start(() => console.log('this animation ends'));
+    }).start();
   };
 
   const fadeOut = (): void => {
     Animated.timing(opacity, {
       toValue: initOpacity,
-      duration: 300,
+      duration: 3000,
       useNativeDriver: true,
     }).start();
   };

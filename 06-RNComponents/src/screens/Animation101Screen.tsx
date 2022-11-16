@@ -5,26 +5,30 @@ import {RootStackParamList} from '../navigartors/StackNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Btn from '../components/Btn';
 import {useAnimation} from '../hook/useAnimation';
+import HeadScreen from '../components/HeadScreen';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'Animation101Screen'> {}
-export default function Animation101Screen({}: Props): JSX.Element {
+export default function Animation101Screen({navigation}: Props): JSX.Element {
   const {fadeIn, fadeOut, opacity, verticalTop, verticalTopIn, verticalTopOut} =
     useAnimation(0.1, -157);
   return (
-    <View style={styles.container}>
-      <Animated.View
-        style={[
-          styles.purpleBox,
-          {position: 'absolute'},
-          {opacity, transform: [{translateY: verticalTop}]},
-        ]}
-      />
-      <Btn title="fadeIn" onPress={fadeIn} />
-      <Btn title="fadeOut" onPress={fadeOut} />
-      <Btn title="verticalTopIn" onPress={verticalTopIn} />
-      <Btn title="verticalTopOut" onPress={verticalTopOut} />
-    </View>
+    <>
+      <HeadScreen title="animation 101" onPress={() => navigation.popToTop()} />
+      <View style={styles.container}>
+        <Animated.View
+          style={[
+            styles.purpleBox,
+            {position: 'absolute'},
+            {opacity, transform: [{translateY: verticalTop}]},
+          ]}
+        />
+        <Btn title="fadeIn" onPress={fadeIn} />
+        <Btn title="fadeOut" onPress={fadeOut} />
+        <Btn title="verticalTopIn" onPress={verticalTopIn} />
+        <Btn title="verticalTopOut" onPress={verticalTopOut} />
+      </View>
+    </>
   );
 }
 

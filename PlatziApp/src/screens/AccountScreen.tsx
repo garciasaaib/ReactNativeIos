@@ -5,6 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import LoginForm from '../components/Auth/LoginForm';
 import UserData from '../components/Auth/UserData';
 import useAuth from '../hooks/useAuth';
+import PokeballBG from '../components/PokeballBG';
 interface Props
   extends NativeStackScreenProps<AccountStackParamList, 'AccountScreen'> {}
 export default function AccountScreen(_props: Props) {
@@ -12,6 +13,7 @@ export default function AccountScreen(_props: Props) {
 
   return (
     <SafeAreaView>
+      <PokeballBG />
       {auth?.isLogged ? <UserData auth={auth} /> : <LoginForm />}
     </SafeAreaView>
   );

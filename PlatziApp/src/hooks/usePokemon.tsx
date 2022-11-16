@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import pokeApi from '../api/pokemonDB';
 import {PokemonDetailResponse, Species, Stat} from '../api/pokemonInterfaces';
-import { PokemonTypeColor } from '../utils/constants';
+import {PokemonTypeColor} from '../utils/constants';
 import {PokemonListItem} from './usePokedex';
 
 export interface PokemonDetails extends PokemonListItem {

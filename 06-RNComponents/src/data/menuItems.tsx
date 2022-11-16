@@ -1,5 +1,6 @@
 import {MenuItem} from '../interfaces/appInterfaces';
 
+// listado de elementos para Flatlist, puede ser de cualquier otra interface
 export const listMenuItems: MenuItem[] = [
   {
     title: 'Animation 101',
@@ -55,5 +56,20 @@ export const listMenuItems: MenuItem[] = [
     title: 'Infinite Scroll Images',
     icon: 'images-outline',
     component: 'InfiniteScrollImagesScreen',
+  },
+  {
+    title: 'Slides',
+    icon: 'map-outline',
+    component: 'SlidesScreen',
+  },
+  {
+    title: 'Slides Animated',
+    icon: 'shapes-outline',
+    component: 'SlidesAnimatedScreen',
+  },
+  {
+    title: 'Change Theme',
+    icon: 'flower-outline',
+    component: 'ChangeThemeScreen',
   },
 ];

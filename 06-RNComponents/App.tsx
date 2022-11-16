@@ -9,14 +9,14 @@
  */
 
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import GeneralStore from './src/context/GeneralStore';
 import StackNavigator from './src/navigartors/StackNavigator';
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <GeneralStore>
       <StackNavigator />
-    </NavigationContainer>
+    </GeneralStore>
   );
 };
 
