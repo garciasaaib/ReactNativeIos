@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -12,39 +12,40 @@ import PokemonStats from '../components/Pokemon/PokemonStats';
 interface Props
   extends NativeStackScreenProps<PokedexStackParamList, 'PokemonScreen'> {}
 export default function PokemonScreen({route}: Props) {
-  const {id} = route.params;
+  const poke = route.params;
   const insets = useSafeAreaInsets();
-  const {pokemon} = usePokemon(id);
   return (
     <>
-      {!pokemon ? (
-        <View style={{paddingTop: insets.top}}>
-          <ActivityIndicator
-            size="large"
-            style={{
-              marginTop: 20,
-              marginBottom: 60,
-            }}
-          />
+      <View
+        style={{
+          flex: 1,
+          overflow: 'hidden',
+        }}>
+        <PokemonHeader
+          id={poke.id}
+          name={poke.name}
+          order={poke.order}
+          image={poke.image!}
+          type={poke.type}
+          color={poke.bgColor}
+        />
+        <PokemonType types={poke.type} colors={poke.colors} />
+        <View style={styles.content}>
+          <Text style={styles.title}>Base Stats</Text>
+          <PokemonStats stats={poke.stats} colors={poke.colors} />
         </View>
-      ) : (
-        <View
-          style={{
-            flex: 1,
-            overflow: 'hidden',
-          }}>
-          <PokemonHeader
-            id={pokemon.id}
-            name={pokemon.name}
-            order={pokemon.order}
-            image={pokemon.image!}
-            type={pokemon.type}
-            colors={pokemon.colors}
-          />
-          <PokemonType types={pokemon.type} colors={pokemon.colors} />
-          <PokemonStats stats={pokemon.stats} colors={pokemon.colors} />
-        </View>
-      )}
+      </View>
     </>
   );
 }
+const styles = StyleSheet.create({
+  content: {
+    paddingHorizontal: 20,
+  },
+  title: {
+    marginTop: 30,
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingBottom: 5,
+  },
+});

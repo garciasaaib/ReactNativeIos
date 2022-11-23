@@ -4,7 +4,7 @@ import {PokemonDetailResponse, Species, Stat} from '../api/pokemonInterfaces';
 import {PokemonTypeColor} from '../utils/constants';
 import {PokemonListItem} from './usePokedex';
 
-export interface PokemonDetails extends PokemonListItem {
+export interface PokemonDetails extends Partial<PokemonListItem> {
   colors: string[];
   id: number;
   name: string;

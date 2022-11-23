@@ -19,8 +19,7 @@ export default function PokemonStats({stats, colors}: Props) {
   }
 
   return (
-    <View style={styles.content}>
-      <Text style={styles.title}>Base Stats</Text>
+    <>
       {stats.map((stat, i) => (
         <View style={styles.stat} key={i}>
           <Text style={styles.statTitle}>{capitalize(stat.stat.name)}</Text>
@@ -37,19 +36,10 @@ export default function PokemonStats({stats, colors}: Props) {
           </View>
         </View>
       ))}
-    </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
-  content: {
-    paddingHorizontal: 20,
-    marginTop: 40,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    paddingBottom: 5,
-  },
   stat: {
     flexDirection: 'row',
     paddingVertical: 5,

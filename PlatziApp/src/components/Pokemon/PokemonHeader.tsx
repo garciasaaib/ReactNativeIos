@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Platform, Image} from 'react-native';
+import {StyleSheet, Text, View, Platform, Image, Animated} from 'react-native';
 import React from 'react';
 import {Species} from '../../api/pokemonInterfaces';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -9,7 +9,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {PokedexStackParamList} from '../../navigations/PokedexStackNavigator';
 // import PokemonFavorite from './PokemonFavorite';
 import useAuth from '../../hooks/useAuth';
-
+import {useAnimation} from '../../hooks/useAnimation';
 
 const isIos = Platform.OS === 'ios';
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
   order: number;
   image: string;
   type: Species[];
-  colors: string[];
+  color: string;
   id: number;
 }
 /**
@@ -25,15 +25,15 @@ interface Props {
  * @param pokemonData All the pokemon data
  * @returns Pokemon data component
  */
-export default function PokemonHeader({id, colors, image, name, order}: Props) {
-  // const {auth} = useAuth();
-  const insets = useSafeAreaInsets();
-  const colorStyle = {
-    backgroundColor: colors[0],
-  };
-  const safeStyle = {paddingTop: isIos ? insets.top : 10};
+export default function PokemonHeader({id, color, image, name, order}: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<PokedexStackParamList>>();
+  const mainImg = useAnimation();
+  const insets = useSafeAreaInsets();
+  const colorStyle = {
+    backgroundColor: color,
+  };
+  const safeStyle = {paddingTop: isIos ? insets.top : 10};
   return (
     <View style={[safeStyle, styles.mainContainer]} key={id}>
       <View style={[styles.bg, colorStyle]} />
@@ -45,7 +45,6 @@ export default function PokemonHeader({id, colors, image, name, order}: Props) {
           size={20}
           onPress={() => navigation.popToTop()}
         />
-        {/* <>{auth.isLogged && <PokemonFavorite id={id} />}</> */}
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.textName}>{capitalize(name)}</Text>
@@ -53,7 +52,11 @@ export default function PokemonHeader({id, colors, image, name, order}: Props) {
       </View>
 
       <View style={[styles.containerImg]}>
-        <Image style={styles.image} source={{uri: image}} />
+        <Animated.Image
+          style={[styles.image, {opacity: mainImg.opacity}]}
+          source={{uri: image}}
+          onLoadEnd={() => mainImg.fadeIn(500)}
+        />
       </View>
     </View>
   );

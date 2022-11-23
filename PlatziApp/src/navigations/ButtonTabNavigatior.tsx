@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export default function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="AccountScreen"
+      initialRouteName="PokedexStack"
       sceneContainerStyle={{}}
       screenOptions={(): BottomTabNavigationOptions => ({
         tabBarActiveTintColor: 'tomato',
