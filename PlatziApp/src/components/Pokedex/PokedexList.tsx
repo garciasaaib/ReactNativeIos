@@ -12,6 +12,7 @@ import React from 'react';
 import {usePokedex} from '../../hooks/usePokedex';
 import PokedexCard from './PokedexCard';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import SearchInput from './SearchInput';
 
 const isIos = Platform.OS === 'ios';
 export default function PokedexList() {
@@ -25,6 +26,10 @@ export default function PokedexList() {
 
   return (
     <FlatList
+      // search Input
+      // ListHeaderComponent={
+      //   <SearchInput onSearch={() => console.log('hola')} data={[1, 2, 3, 4]} />
+      // }
       data={pokedex}
       numColumns={2} //item por columna
       showsVerticalScrollIndicator={false}
@@ -46,6 +51,7 @@ export default function PokedexList() {
           <Text>No more pokemons</Text>
         )
       }
+      // refresh control
       onRefresh={() => loadMore()}
       refreshing={false}
     />

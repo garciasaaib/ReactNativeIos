@@ -2,4 +2,10 @@
 GET https://pokeapi.co/api/v2/pokemon?limit=20&offset=0
 
 ### pokemon detail
-GET https://pokeapi.co/api/v2/pokemon/16/
+GET https://pokeapi.co/api/v2/pokemon/4/
+
+### pokemon all
+GET https://pokeapi.co/api/v2/pokemon?limit=1200
+
+### pokemon detail
+GET https://pokeapi.co/api/v2/pokemon/10080

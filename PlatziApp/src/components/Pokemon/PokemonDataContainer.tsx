@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 
 export default function PokemonContainer() {
@@ -9,4 +9,4 @@ export default function PokemonContainer() {
   );
 }
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});

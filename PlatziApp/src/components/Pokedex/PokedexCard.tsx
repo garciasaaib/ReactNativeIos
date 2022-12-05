@@ -69,7 +69,7 @@ export default function PokedexCard({pokemon}: {pokemon: PokemonListItem}) {
       <View style={styles.textBox}>
         <Text style={styles.name}>{capitalize(pokemon.name)}</Text>
         <Text style={{...styles.number}}>
-          {`${pokemon.order}`.padStart(3, '0')}
+          {`${pokemon.id}`.padStart(3, '0')}
         </Text>
       </View>
       <Image

@@ -5,7 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 const isIos = Platform.OS === 'ios';
 
 interface Props {
-  title: boolean;
+  title?: boolean;
 }
 const PokeballBG = ({title = false}: Props) => {
   const insets = useSafeAreaInsets();
