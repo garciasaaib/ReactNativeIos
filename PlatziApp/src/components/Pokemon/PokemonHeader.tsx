@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Platform, Image, Animated} from 'react-native';
+import {StyleSheet, Text, View, Platform, Animated} from 'react-native';
 import React from 'react';
 import {Species} from '../../api/pokemonInterfaces';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -8,7 +8,6 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {PokedexStackParamList} from '../../navigations/PokedexStackNavigator';
 // import PokemonFavorite from './PokemonFavorite';
-import useAuth from '../../hooks/useAuth';
 import {useAnimation} from '../../hooks/useAnimation';
 
 const isIos = Platform.OS === 'ios';

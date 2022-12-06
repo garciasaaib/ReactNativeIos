@@ -1,27 +1,25 @@
 import {
   Platform,
   StyleSheet,
-  Text,
   TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDebouncedInput} from '../../hooks/useDebounceInput';
 interface Props {
-  onSearch: (name: string) => void;
-  data: any[];
+  onDebounce: (value: string) => void;
 }
 const isIos = Platform.OS === 'ios';
-export default function SearchInput({onSearch, data}: Props) {
-  function runSearch() {
-    onSearch('pikachu');
-  }
-  useEffect(() => {
-    setTimeout(() => {
-      runSearch();
-    }, 500);
-  }, []);
+export default function SearchInput({onDebounce}: Props) {
+  const [text, setText] = React.useState('');
+  const {debounceValue} = useDebouncedInput(text, 500);
+
+  React.useEffect(() => {
+    onDebounce(debounceValue);
+  }, [debounceValue]);
+
   return (
     <View style={styles.container}>
       <View style={[styles.textBg, styles.shadow]}>
@@ -31,7 +29,8 @@ export default function SearchInput({onSearch, data}: Props) {
           autoCapitalize="none"
           autoCorrect={false}
           clearButtonMode="always"
-          returnKeyLabel="holo"
+          value={text}
+          onChangeText={value => setText(value)}
         />
         {!isIos && (
           <TouchableWithoutFeedback onPress={() => console.log('hola')}>
@@ -50,7 +49,6 @@ export default function SearchInput({onSearch, data}: Props) {
           style={styles.textIcon}
         />
       </View>
-      <Text>{JSON.stringify(data, null, 2)}</Text>
     </View>
   );
 }

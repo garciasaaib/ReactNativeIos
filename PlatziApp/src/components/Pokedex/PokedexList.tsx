@@ -16,45 +16,62 @@ import SearchInput from './SearchInput';
 
 const isIos = Platform.OS === 'ios';
 export default function PokedexList() {
-  const {pokedex, loadPokemons, isNext} = usePokedex();
+  const {pokedex, loadPokemons, isNext, filteredList, loadFilteredList} =
+    usePokedex();
   const insets = useSafeAreaInsets();
+  const [term, setTerm] = React.useState('');
 
   const loadMore = () => {
     console.log('Cargando mas pokemons...');
     isNext.current && loadPokemons(); // isNext es la flag para saber cuando ya no hay mas pokemons
   };
 
+  React.useEffect(() => {
+    loadFilteredList(term);
+  }, [term]);
+
   return (
-    <FlatList
-      // search Input
-      // ListHeaderComponent={
-      //   <SearchInput onSearch={() => console.log('hola')} data={[1, 2, 3, 4]} />
-      // }
-      data={pokedex}
-      numColumns={2} //item por columna
-      showsVerticalScrollIndicator={false}
-      keyExtractor={pokemon => String(pokemon.id)} // key debe ser string
-      renderItem={({item}) => <PokedexCard pokemon={item} />}
-      contentContainerStyle={[
-        styles.listItem,
-        {paddingTop: isIos ? insets.top + 50 : 50},
-      ]}
-      // infinite scroll
-      onEndReached={() => loadMore()} // funcion llamada al llegar al final de la lista
-      onEndReachedThreshold={0.1} // medida del observer para la funcion de onEndReached
-      ListFooterComponent={
-        isNext.current ? (
-          <View style={styles.spinnerContainer}>
-            <ActivityIndicator size="large" style={styles.spinner} />
-          </View>
-        ) : (
-          <Text>No more pokemons</Text>
-        )
-      }
-      // refresh control
-      onRefresh={() => loadMore()}
-      refreshing={false}
-    />
+    <>
+      <FlatList
+        // search Input
+        ListHeaderComponent={
+          <>
+            <SearchInput onDebounce={value => setTerm(value)} />
+            <Text style={{color: 'grey', marginHorizontal: 20}}>{term}</Text>
+          </>
+        }
+        data={!filteredList.length ? pokedex : filteredList}
+        numColumns={2} //item por columna
+        showsVerticalScrollIndicator={false}
+        keyExtractor={pokemon => String(pokemon.id)} // key debe ser string
+        renderItem={({item}) => <PokedexCard pokemon={item} />}
+        contentContainerStyle={[
+          styles.listItem,
+          {
+            paddingTop: isIos ? insets.top + 50 : 50,
+          },
+        ]}
+        // infinite scroll
+        onEndReached={() => {
+          !filteredList.length && loadMore();
+        }} // funcion llamada al llegar al final de la lista
+        onEndReachedThreshold={0.1} // medida del observer para la funcion de onEndReached
+        ListFooterComponent={
+          isNext.current && !filteredList.length ? (
+            <View style={styles.spinnerContainer}>
+              <ActivityIndicator size="large" style={styles.spinner} />
+            </View>
+          ) : (
+            <Text>End of the list</Text>
+          )
+        }
+        // refresh control
+        onRefresh={() => {
+          !filteredList.length && loadMore();
+        }}
+        refreshing={false}
+      />
+    </>
   );
 }
 

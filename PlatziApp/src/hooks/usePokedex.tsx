@@ -28,9 +28,10 @@ export interface PokemonListItem {
 
 export const usePokedex = () => {
   const [pokedex, setPokedex] = useState<PokemonListItem[]>([]);
-  const [filteredList, setFilteredList] = useState<unknown[]>([]);
 
-  // const [isLoading, setLoading] = useState<boolean>(false);
+  // for seach pokemon
+  const [filteredList, setFilteredList] = useState<PokemonListItem[]>([]);
+  const [isLoading, setLoading] = useState(false);
 
   const isNext = useRef<boolean>(true);
   const offset = useRef<number>(0);
@@ -56,9 +57,11 @@ export const usePokedex = () => {
     const pokeColor = poke.types.map(({type}): string => {
       return PokemonTypeColor[type.name as keyof typeof PokemonTypeColor];
     });
-    const pokeGradiant = await getImageGradiantColor(pokeImage, pokeColor[0]);
+    let pokeGradiant = await getImageGradiantColor(pokeImage, pokeColor[0]);
     if (pokeGradiant === undefined) {
       throw new Error('Error setting color');
+    } else if (pokeGradiant === '#FFFFFF') {
+      pokeGradiant = pokeColor[0];
     }
     const pokeSprites = [poke.sprites.front_default, poke.sprites.back_default];
     const pokeAbilities = poke.abilities.map(pokes => pokes.ability);
@@ -107,7 +110,7 @@ export const usePokedex = () => {
     return res.results;
   }
 
-  //
+  // main function to load pokemons in state
   async function loadPokemons() {
     try {
       // first fetch of pokemons
@@ -135,7 +138,6 @@ export const usePokedex = () => {
           }
         }),
       );
-      console.log(list.forEach(poke => console.log(poke.name, poke.id)));
 
       // set in the list
       setPokedex([...pokedex, ...list]);
@@ -143,11 +145,15 @@ export const usePokedex = () => {
       console.log('---> ', error);
     }
   }
-  /*
-  async function filterByName(partialName: string) {
-    try {
-      // request all pokemons
 
+  async function loadFilteredList(partialName: string) {
+    try {
+      setLoading(true);
+      if (!partialName || partialName.length < 3 || /\W+/i.test(partialName)) {
+        setLoading(false);
+        return setFilteredList([]);
+      }
+      // request all pokemons
       const res = await pokeApi.get<PokemonListResponse>('/pokemon', {
         params: {
           limit: count.current || 1200,
@@ -155,29 +161,35 @@ export const usePokedex = () => {
       });
 
       // filter by name
-      const nameRegE
-      // ;xp = new RegExp(partialName);
-      // const pokeByList = res.data.results.filter(({name}) =>
-      //   nameRegExp.test(name),
-      // );
+      const nameRegExp = new RegExp(partialName, 'i');
+      const pokeByList = res.data.results.filter(({name}) =>
+        nameRegExp.test(name),
+      );
       // create Promises
-      // const newList = await Promise.all(
-      // pokeByList.map(pokemon => mapPokemonlist(pokemon)),
-      // );
-      //   .then(data => {
-      //     console.log(data);
-      //     return data;
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   });
-
-      // setFilteredList([...pokeByList]);`
+      const list: PokemonListItem[] = [];
+      await Promise.allSettled(
+        pokeByList.map(async poke => {
+          // fetch pokemon details
+          const data = await fetchPokemon(poke);
+          // format pokemon details
+          const formatedPokemon = await formatPokemon(data);
+          return formatedPokemon;
+        }),
+      ).then(data =>
+        data.forEach(p => {
+          if (p.status === 'fulfilled') {
+            list.push(p.value);
+          }
+        }),
+      );
+      setFilteredList([...list]);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       throw new Error('Bad request');
     }
   }
-  */
+
   useEffect(() => {
     loadPokemons();
   }, []);
@@ -186,5 +198,7 @@ export const usePokedex = () => {
     pokedex,
     loadPokemons,
     isNext,
+    filteredList,
+    loadFilteredList,
   };
 };

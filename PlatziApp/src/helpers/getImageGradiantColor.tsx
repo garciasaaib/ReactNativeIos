@@ -26,7 +26,7 @@ export const getImageGradiantColor = async (
       break;
     case 'ios':
       response =
-        result.background !== '#ffffff' && result.background !== '#000000'
+        result.background !== '#FFFFF' && result.background !== '#000000'
           ? result.background
           : typeBg;
       break;
