@@ -32,8 +32,8 @@ export default function SearchInput({onDebounce}: Props) {
           value={text}
           onChangeText={value => setText(value)}
         />
-        {!isIos && (
-          <TouchableWithoutFeedback onPress={() => console.log('hola')}>
+        {!isIos && text && (
+          <TouchableWithoutFeedback onPress={() => setText('')}>
             <Icon
               name="close-outline"
               color="white"
@@ -56,15 +56,16 @@ export default function SearchInput({onDebounce}: Props) {
 const styles = StyleSheet.create({
   container: {},
   textBg: {
-    backgroundColor: '#f3f3f3',
+    backgroundColor: '#f2eff0',
+
     height: 40,
     borderRadius: 50,
     marginHorizontal: 10,
     paddingHorizontal: 10,
     justifyContent: 'space-between',
     alignContent: 'center',
-    borderColor: 'grey',
-    borderWidth: 1,
+    // borderColor: 'grey',
+    // borderWidth: 1,
     flexDirection: 'row',
   },
   textInput: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textIcon: {
-    top: 2,
+    top: isIos ? 2 : 5,
   },
   textClean: {
     backgroundColor: '#ccc',

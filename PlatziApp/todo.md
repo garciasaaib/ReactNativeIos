@@ -1,0 +1,6 @@
+- [ ] add more info in details
+- [ ] auth with firebase
+- [ ] filter for type and zone
+- [ ] set favorites and show it in the view, and carousel
+- [ ] set theme values and dark mode manager
+- [ ] set splash screen

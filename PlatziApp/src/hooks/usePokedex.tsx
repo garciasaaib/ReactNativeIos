@@ -31,6 +31,7 @@ export const usePokedex = () => {
 
   // for seach pokemon
   const [filteredList, setFilteredList] = useState<PokemonListItem[]>([]);
+  const [unfilteredList, setUnfilteredList] = useState<Result[]>([]);
   const [isLoading, setLoading] = useState(false);
 
   const isNext = useRef<boolean>(true);
@@ -149,22 +150,42 @@ export const usePokedex = () => {
   async function loadFilteredList(partialName: string) {
     try {
       setLoading(true);
-      if (!partialName || partialName.length < 3 || /\W+/i.test(partialName)) {
+      // if it is a number can be 1 char and do the search
+
+      // get the hole list of pokemon by store or by api
+      let res = unfilteredList.length
+        ? unfilteredList
+        : await pokeApi
+            .get<PokemonListResponse>('/pokemon', {
+              params: {
+                limit: count.current || 1200,
+              },
+            })
+            .then(response => {
+              setUnfilteredList(response.data.results);
+              return response.data.results;
+            });
+
+      // filter list
+      let pokeByList: Result[] = [];
+      if (/^\d+$/.test(partialName)) {
+        // if it is a number can be 1 char and do the search
+        const data = unfilteredList.find(p => {
+          if (p.url.includes(partialName)) {
+            return true;
+          }
+        });
+        data !== undefined && pokeByList.push(data);
+      } else if (partialName.length < 3 || /\W+/i.test(partialName)) {
+        // if is a string with less than 3 length string, go out
         setLoading(false);
         return setFilteredList([]);
+      } else {
+        // if is a 3 or more length string
+        const nameRegExp = new RegExp(partialName, 'i');
+        pokeByList = res.filter(({name}) => nameRegExp.test(name));
       }
-      // request all pokemons
-      const res = await pokeApi.get<PokemonListResponse>('/pokemon', {
-        params: {
-          limit: count.current || 1200,
-        },
-      });
 
-      // filter by name
-      const nameRegExp = new RegExp(partialName, 'i');
-      const pokeByList = res.data.results.filter(({name}) =>
-        nameRegExp.test(name),
-      );
       // create Promises
       const list: PokemonListItem[] = [];
       await Promise.allSettled(
