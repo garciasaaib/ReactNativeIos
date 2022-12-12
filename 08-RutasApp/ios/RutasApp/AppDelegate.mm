@@ -6,6 +6,9 @@
 
 #import <React/RCTAppSetupUtils.h>
 
+// google maps
+#import <GoogleMaps/GoogleMaps.h>
+
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -31,6 +34,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+ [GMSServices provideAPIKey:@"AIzaSyAwtHzYHX9DwuUjiVPJl35UskFGHpqPxWA"]; // add this line using the api key obtained from Google Console
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];

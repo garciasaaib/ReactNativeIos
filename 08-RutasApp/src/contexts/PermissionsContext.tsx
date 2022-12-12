@@ -31,6 +31,10 @@ export const PermissionProvider = ({children}: {children: JSX.Element}) => {
 
   // primer verificacion de permisos
   React.useEffect(() => {
+    // en el primer render obtiene el estado y genera el listener
+    // pero solo el listener perdura
+    checkLocationPermissions();
+
     AppState.addEventListener('change', state => {
       if (state !== 'active') {
         return;
