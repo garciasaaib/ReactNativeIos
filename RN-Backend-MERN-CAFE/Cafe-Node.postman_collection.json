@@ -1,0 +1,581 @@
+{
+	"info": {
+		"_postman_id": "67657312-17f0-4499-8a31-5724b3a0567c",
+		"name": "Cafe-Node",
+		"description": "Lista de los servicios creados en este backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"test 1\",\n    \"correo\": \"test16@test.com\",\n    \"password\": \"123456\",\n    \"rol\": \"USER_ROLE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/usuarios",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Usuario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"_id\": \"asdasdasd\",\n    \"nombre\": \"Test 15\",\n    \"google\": true,\n    \"correo\": \"test15@test.com\",\n    \"password\": \"123456\",\n    \"rol\": \"VENTAS_ROLE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/usuarios/601de42915b4152760fbab9d",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"usuarios",
+						"601de42915b4152760fbab9d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Usuarios - Paginado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/usuarios?limite=5",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"usuarios"
+					],
+					"query": [
+						{
+							"key": "limite",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI2MzkxNDcsImV4cCI6MTYxMjY1MzU0N30.SNPHHnUZsahKrXB9pQvFyWKXLtKpaw916HbXE2BGQMM123123",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/api/usuarios/601de3fe15b4152760fbab90",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"usuarios",
+						"601de3fe15b4152760fbab90"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"correo\": \"test1@test.com\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Google SignIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id_token\": \"123abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/google",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"google"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Renovar o Validar JWT",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDVjOTgyZWQ3ODZkNWYzOTVlMGMwZjMiLCJpYXQiOjE2MTY2ODQyMDEsImV4cCI6MTYxNjY5ODYwMX0.Z9xylB_q9KS4xy7zHeZL_oPWt1H5GOdKb_qPt7-FoPU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/api/auth/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Categorias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/categorias",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener categoria por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/categorias/60204112a0b5081463cb9aaD",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"categorias",
+						"60204112a0b5081463cb9aaD"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Categoria",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI3MjU5MDUsImV4cCI6MTYxMjc0MDMwNX0.OmyRGkOEf3hZeo1-eeWJGFGfBe_t5c7wDIj7MnYv-H0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Bebida Fría\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/categorias",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Categoria",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI3MjU5MDUsImV4cCI6MTYxMjc0MDMwNX0.OmyRGkOEf3hZeo1-eeWJGFGfBe_t5c7wDIj7MnYv-H0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Galleta\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/categorias/60204112a0b5081463cb9aad",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"categorias",
+						"60204112a0b5081463cb9aad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar categoria",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI3MjU5MDUsImV4cCI6MTYxMjc0MDMwNX0.OmyRGkOEf3hZeo1-eeWJGFGfBe_t5c7wDIj7MnYv-H0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/api/categorias/60204112a0b5081463cb9aad",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"categorias",
+						"60204112a0b5081463cb9aad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener productos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/productos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Producto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/productos/60204f546d0c36181d12804d",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"productos",
+						"60204f546d0c36181d12804d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Producto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI3MzAxMTgsImV4cCI6MTYxMjc0NDUxOH0.RVzpf-zFXMkXnFvu3evdegOMCLO8JMsOUh-cbYdZIZ4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Ritz\",\n    \"categoria\": \"60204112a0b5081463cb9aad\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/productos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Producto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI3MzAxMTgsImV4cCI6MTYxMjc0NDUxOH0.RVzpf-zFXMkXnFvu3evdegOMCLO8JMsOUh-cbYdZIZ4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Oreo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/productos/60204f546d0c36181d12804d",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"productos",
+						"60204f546d0c36181d12804d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Producto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDFkZTNmYzE1YjQxNTI3NjBmYmFiOGYiLCJpYXQiOjE2MTI3MzAxMTgsImV4cCI6MTYxMjc0NDUxOH0.RVzpf-zFXMkXnFvu3evdegOMCLO8JMsOUh-cbYdZIZ4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/api/productos/60204f546d0c36181d12804d",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"productos",
+						"60204f546d0c36181d12804d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/buscar/productos/602050e0dc46a518393f8b3d",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"buscar",
+						"productos",
+						"602050e0dc46a518393f8b3d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subir archivo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/Users/strider/Pictures/Heros/batman.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/uploads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargar imagen de usuario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/Users/strider/Pictures/Heros/batman.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/uploads/usuarios/601de3fc15b4152760fbab8f",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"usuarios",
+						"601de3fc15b4152760fbab8f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargar imagen producto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/Users/strider/Pictures/productos/oreo.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/uploads/productos/60204f626d0c36181d12804e",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"productos",
+						"60204f626d0c36181d12804e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener imagen de producto - usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/uploads/productos/60204f626d0c36181d12804e",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"productos",
+						"60204f626d0c36181d12804e"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
