@@ -7,11 +7,13 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ProtectedScreen from '../screens/ProtectedScreen';
 import LoadingScreen from '../screens/LoadingScreen';
+import ProductsStackNavigator from './ProductsStackNavigator';
 
 export type AuthStackParamList = {
   LoginScreen: undefined;
   RegisterScreen: undefined;
   ProtectedScreen: undefined;
+  ProductsStackNavigator: undefined;
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -37,7 +39,13 @@ export default function AuthStackNavigator() {
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         </>
       ) : (
-        <Stack.Screen name="ProtectedScreen" component={ProtectedScreen} />
+        <>
+          <Stack.Screen
+            name="ProductsStackNavigator"
+            component={ProductsStackNavigator}
+          />
+          <Stack.Screen name="ProtectedScreen" component={ProtectedScreen} />
+        </>
       )}
     </Stack.Navigator>
   );
