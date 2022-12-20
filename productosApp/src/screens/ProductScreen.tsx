@@ -15,13 +15,15 @@ import {Picker} from '@react-native-picker/picker';
 import useProductCategory from '../hooks/useProductCategory';
 import {useForm} from '../hooks/useFrom';
 import {ProductsContext} from '../contexts/Poducts/ProductsContext';
+import ImageButtons from '../components/ImageButtons';
 
 interface Props
   extends NativeStackScreenProps<ProductsStackParamList, 'ProductScreen'> {}
 export default function ProductScreen({navigation, route}: Props) {
-  const {loadProductById, addProduct, updateProduct} =
+  const {loadProductById, addProduct, updateProduct, updateImageProduct} =
     React.useContext(ProductsContext);
   const {name, id} = route.params;
+
   const {_id, categoriaId, nombre, img, form, onChange, setFormValue} = useForm(
     {
       _id: id,
@@ -69,6 +71,7 @@ export default function ProductScreen({navigation, route}: Props) {
       }
     }
   };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -104,21 +107,22 @@ export default function ProductScreen({navigation, route}: Props) {
         )}
 
         {/* botones de galeria */}
+
         {_id && (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 10,
-            }}>
-            <Button title="Camera" onPress={() => {}} color="#5856d6" />
-            <Button title="Gallery" onPress={() => {}} color="#5856d6" />
-          </View>
+          <>
+            <ImageButtons
+              setTempUri={data => onChange(data, 'img')}
+              updateImage={imageData => {
+                updateImageProduct(imageData, _id);
+              }}
+            />
+          </>
         )}
 
         {/* Guardar */}
         <Button title="Save" onPress={saveOrUpdateProduct} color="#5856d6" />
-        {/* <Text>{JSON.stringify(form, null, 2)}</Text> */}
+        <Text>{JSON.stringify(form, null, 2)}</Text>
+        {/* <Text>{tempUri || ''}</Text> */}
       </ScrollView>
     </View>
   );

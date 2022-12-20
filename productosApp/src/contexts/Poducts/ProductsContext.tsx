@@ -16,7 +16,10 @@ type ProductsContextProps = {
   removeProduct: (productId: string) => Promise<void>;
   // loadProductById: (productId: string) => Promise<Producto>;
   loadProductById: (productId: string) => Promise<Producto>;
-  updateImageProduct: (data: unknown, productId: string) => Promise<void>;
+  updateImageProduct: (
+    data: {uri: string; name: string; type: string},
+    productId: string,
+  ) => Promise<void>;
   updateProduct: (
     categoryId: string,
     productName: string,
@@ -57,7 +60,6 @@ export const ProductsProvider = ({children}: Props) => {
     return res.data;
   };
 
-  const updateImageProduct = async (data: unknown, productId: string) => {};
   const updateProduct = async (
     categoryId: string,
     productName: string,
@@ -74,6 +76,32 @@ export const ProductsProvider = ({children}: Props) => {
     ]);
     return res.data;
   };
+
+  const updateImageProduct: ProductsContextProps['updateImageProduct'] = async (
+    {uri, type, name},
+    productId,
+  ) => {
+    const fileToUpload = {
+      uri,
+      type,
+      name,
+    };
+    // console.log(fileToUpload);
+    const formData = new FormData();
+    formData.append('archivo', fileToUpload);
+    try {
+      const res = await cafeApi.put(
+        `/uploads/productos/${productId}/`,
+        formData,
+        {
+          headers: {'Content-Type': 'multipart/form-data'},
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ProductsContext.Provider
       value={{

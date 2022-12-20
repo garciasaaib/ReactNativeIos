@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, {AxiosRequestConfig} from 'axios';
 
-const baseURL = 'https://http-nodejs-production-3fae.up.railway.app/api';
-// const baseURL = 'http://localhost:8080/api';
+export const baseURL = 'https://http-nodejs-production-3fae.up.railway.app/api';
+// export const baseURL = 'http://localhost:8080/api';
 
 /**
  * creamos una funcion de axios para que siempre maneje la url del backend
