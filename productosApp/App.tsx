@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthStackNavigator from './src/navigators/AuthStackNavigator';
 import {AuthProvider, AuthProviderProps} from './src/contexts/Auth/AuthContext';
 import {ProductsProvider} from './src/contexts/Poducts/ProductsContext';
+import SplashScreen from 'react-native-splash-screen';
 
 const AppState = ({children}: AuthProviderProps) => {
   return (
@@ -13,7 +14,11 @@ const AppState = ({children}: AuthProviderProps) => {
     </AuthProvider>
   );
 };
+
 function App() {
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <NavigationContainer>
       <AppState>
